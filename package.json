@@ -1,0 +1,13 @@
+{
+    "name": "celluloid",
+    "description": "Realtime 3D cel shading, anywhere.",
+    "scripts": {
+        "test": "jasmine"
+    },
+    "devDependencies": {
+        "gl-matrix": "^2.4.0",
+        "jasmine": "^3.1.0",
+        "rewire": "^3.0.2"
+    },
+    "dependencies": {}
+}
