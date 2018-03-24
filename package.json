@@ -2,12 +2,19 @@
     "name": "celluloid",
     "description": "Realtime 3D cel shading, anywhere.",
     "scripts": {
-        "test": "jasmine"
+        "prepublish": "npm-run-all babel test uglify",
+        "test": "jasmine",
+        "babel": "babel src --out-file dist/index.js",
+        "uglify": "uglifyjs --compress --mangle --toplevel dist/index.js --output dist/index.min.js"
     },
     "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
         "gl-matrix": "^2.4.0",
         "jasmine": "^3.1.0",
-        "rewire": "^3.0.2"
+        "npm-run-all": "^4.1.2",
+        "rewire": "^3.0.2",
+        "uglify-js": "^3.3.16"
     },
     "dependencies": {}
 }
