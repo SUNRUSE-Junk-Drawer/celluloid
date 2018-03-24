@@ -4,7 +4,7 @@
     "scripts": {
         "prepublish": "npm-run-all babel test uglify",
         "test": "jasmine",
-        "babel": "babel src --out-file dist/index.js",
+        "babel": "mkdirp dist && babel src --out-file dist/index.js",
         "uglify": "uglifyjs --compress --mangle --toplevel dist/index.js --output dist/index.min.js"
     },
     "devDependencies": {
@@ -12,6 +12,7 @@
         "babel-preset-env": "^1.6.1",
         "gl-matrix": "^2.4.0",
         "jasmine": "^3.1.0",
+        "mkdirp": "^0.5.1",
         "npm-run-all": "^4.1.2",
         "rewire": "^3.0.2",
         "uglify-js": "^3.3.16"
