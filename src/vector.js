@@ -87,23 +87,23 @@ function rotateMatrixAroundZ(to, radians) {
   rotateMatrix(to, radians, 0, 1, 2, 3, 4, 5, 6, 7)
 }
 
-function scaleMatrix(to, meters, indexA, indexB, indexC, indexD) {
-  to[indexA] *= meters
-  to[indexB] *= meters
-  to[indexC] *= meters
-  to[indexD] *= meters
+function scaleMatrix(to, factor, indexA, indexB, indexC, indexD) {
+  to[indexA] *= factor
+  to[indexB] *= factor
+  to[indexC] *= factor
+  to[indexD] *= factor
 }
 
-function scaleMatrixOnX(to, meters) {
-  scaleMatrix(to, meters, 0, 1, 2, 3)
+function scaleMatrixOnX(to, factor) {
+  scaleMatrix(to, factor, 0, 1, 2, 3)
 }
 
-function scaleMatrixOnY(to, meters) {
-  scaleMatrix(to, meters, 4, 5, 6, 7)
+function scaleMatrixOnY(to, factor) {
+  scaleMatrix(to, factor, 4, 5, 6, 7)
 }
 
-function scaleMatrixOnZ(to, meters) {
-  scaleMatrix(to, meters, 8, 9, 10, 11)
+function scaleMatrixOnZ(to, factor) {
+  scaleMatrix(to, factor, 8, 9, 10, 11)
 }
 
 function perspectiveMatrix(to, fieldOfViewRadians, scaleX, scaleY, near, far) {
