@@ -14,6 +14,7 @@ describe("createVector", () => {
 })
 
 const createMatrix = vector.__get__("createMatrix")
+const copyMatrix = vector.__get__("copyMatrix")
 const identityMatrix = vector.__get__("identityMatrix")
 const translateMatrixOnX = vector.__get__("translateMatrixOnX")
 const translateMatrixOnY = vector.__get__("translateMatrixOnY")
@@ -41,6 +42,87 @@ describe("createMatrix", () => {
     it("x", () => expect(actualVector[0]).toBeCloseTo(-0.43))
     it("y", () => expect(actualVector[1]).toBeCloseTo(2.50))
     it("z", () => expect(actualVector[2]).toBeCloseTo(-2.34))
+  })
+})
+
+describe("copyMatrix", () => {
+  let from, to
+  beforeEach(() => {
+    from = createMatrix()
+    from[0] = -2.50
+    from[1] = -1.90
+    from[2] = -0.28
+    from[3] = -3.00
+    from[4] = 0.59
+    from[5] = 1.74
+    from[6] = 0.43
+    from[7] = -1.13
+    from[8] = 0.55
+    from[9] = -2.29
+    from[10] = -0.97
+    from[11] = 2.96
+    from[12] = -1.28
+    from[13] = -2.65
+    from[14] = 1.55
+    from[15] = -1.32
+
+    to = createMatrix()
+    to[0] = -0.92
+    to[1] = -0.70
+    to[2] = 0.33
+    to[3] = -1.03
+    to[4] = -1.25
+    to[5] = 0.37
+    to[6] = 1.27
+    to[7] = 2.93
+    to[8] = -1.28
+    to[9] = 0.87
+    to[10] = -0.15
+    to[11] = 0.01
+    to[12] = 0.08
+    to[13] = -0.67
+    to[14] = -2.74
+    to[15] = 0.85
+
+    copyMatrix(from, to)
+  })
+
+  it("does not modify the matrix copied from", () => {
+    expect(from[0]).toBeCloseTo(-2.50)
+    expect(from[1]).toBeCloseTo(-1.90)
+    expect(from[2]).toBeCloseTo(-0.28)
+    expect(from[3]).toBeCloseTo(-3.00)
+    expect(from[4]).toBeCloseTo(0.59)
+    expect(from[5]).toBeCloseTo(1.74)
+    expect(from[6]).toBeCloseTo(0.43)
+    expect(from[7]).toBeCloseTo(-1.13)
+    expect(from[8]).toBeCloseTo(0.55)
+    expect(from[9]).toBeCloseTo(-2.29)
+    expect(from[10]).toBeCloseTo(-0.97)
+    expect(from[11]).toBeCloseTo(2.96)
+    expect(from[12]).toBeCloseTo(-1.28)
+    expect(from[13]).toBeCloseTo(-2.65)
+    expect(from[14]).toBeCloseTo(1.55)
+    expect(from[15]).toBeCloseTo(-1.32)
+  })
+
+  it("replaces the contents of the matrix copied to with those of the matrix copied from", () => {
+    expect(to[0]).toBeCloseTo(-2.50)
+    expect(to[1]).toBeCloseTo(-1.90)
+    expect(to[2]).toBeCloseTo(-0.28)
+    expect(to[3]).toBeCloseTo(-3.00)
+    expect(to[4]).toBeCloseTo(0.59)
+    expect(to[5]).toBeCloseTo(1.74)
+    expect(to[6]).toBeCloseTo(0.43)
+    expect(to[7]).toBeCloseTo(-1.13)
+    expect(to[8]).toBeCloseTo(0.55)
+    expect(to[9]).toBeCloseTo(-2.29)
+    expect(to[10]).toBeCloseTo(-0.97)
+    expect(to[11]).toBeCloseTo(2.96)
+    expect(to[12]).toBeCloseTo(-1.28)
+    expect(to[13]).toBeCloseTo(-2.65)
+    expect(to[14]).toBeCloseTo(1.55)
+    expect(to[15]).toBeCloseTo(-1.32)
   })
 })
 

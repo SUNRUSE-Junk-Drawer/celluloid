@@ -18,6 +18,25 @@ function createMatrix() {
   return output
 }
 
+function copyMatrix(from, to) {
+  to[0] = from[0]
+  to[1] = from[1]
+  to[2] = from[2]
+  to[3] = from[3]
+  to[4] = from[4]
+  to[5] = from[5]
+  to[6] = from[6]
+  to[7] = from[7]
+  to[8] = from[8]
+  to[9] = from[9]
+  to[10] = from[10]
+  to[11] = from[11]
+  to[12] = from[12]
+  to[13] = from[13]
+  to[14] = from[14]
+  to[15] = from[15]
+}
+
 function applyMatrixToVector(to, matrix) {
   const x = to[0]
   const y = to[1]
