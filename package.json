@@ -3,6 +3,7 @@
     "description": "Realtime 3D cel shading, anywhere.",
     "version": "0.0.0",
     "scripts": {
+        "start": "npm install && npm-run-all --parallel watch host",
         "watch": "npm run-script prepublish && npm-run-all --parallel watch-babel watch-test watch-uglify watch-build-html",
         "watch-babel": "chokidar src/**.js --command \"npm run-script babel\"",
         "watch-test": "chokidar dist/index.js spec/**.js --command \"npm test\"",
@@ -12,7 +13,8 @@
         "test": "jasmine",
         "babel": "mkdirp dist && babel --config-file ./browser.babelrc src --ignore src/header.js --out-file dist/index.js",
         "uglify": "uglifyjs --compress --mangle --toplevel src/header.js dist/index.js --output dist/index.min.js",
-        "build-html": "babel-node ./build-html.js"
+        "build-html": "babel-node ./build-html.js",
+        "host": "mkdirp dist && cd dist && http-static"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0-beta.42",
@@ -23,6 +25,7 @@
         "favicons": "^4.8.6",
         "gl-matrix": "^2.4.0",
         "html-minifier": "^3.5.12",
+        "http-static": "0.0.8",
         "imagemin": "^5.3.1",
         "imagemin-pngcrush": "^5.1.0",
         "jasmine": "^3.1.0",
