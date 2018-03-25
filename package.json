@@ -10,11 +10,12 @@
         "watch-uglify": "chokidar dist/index.js --command \"npm run-script uglify\"",
         "watch-build-html": "chokidar build-html.js src/favicon.png --command \"npm run-script build-html\"",
         "prepublish": "npm-run-all babel test uglify build-html",
-        "test": "jasmine",
+        "test": "nyc --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 --include dist/index.js jasmine",
         "babel": "mkdirp dist && babel --config-file ./browser.babelrc src --ignore src/header.js --out-file dist/index.js",
         "uglify": "uglifyjs --compress --mangle --toplevel src/header.js dist/index.js --output dist/index.min.js",
         "build-html": "babel-node ./build-html.js",
-        "host": "mkdirp dist && cd dist && http-static"
+        "host": "mkdirp dist && cd dist && http-static",
+        "upload-coverage": "nyc --report lcovonly --include dist/index.js jasmine | coveralls"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0-beta.42",
@@ -22,6 +23,7 @@
         "@babel/node": "^7.0.0-beta.42",
         "@babel/preset-env": "^7.0.0-beta.42",
         "chokidar-cli": "^1.2.0",
+        "coveralls": "^3.0.0",
         "favicons": "^4.8.6",
         "gl-matrix": "^2.4.0",
         "html-minifier": "^3.5.12",
@@ -31,6 +33,7 @@
         "jasmine": "^3.1.0",
         "mkdirp": "^0.5.1",
         "npm-run-all": "^4.1.2",
+        "nyc": "^11.6.0",
         "rewire": "^3.0.2",
         "uglify-js": "^3.3.16"
     },
