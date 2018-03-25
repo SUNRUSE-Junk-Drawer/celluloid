@@ -531,7 +531,7 @@ describe("transform", () => {
       transform.__get__("translateOnX")(37.4)
     })
 
-    it("calls translateMatrixOnX once", () => expect(translateMatrixOnX.calls.count()).toEqual(1))
+    it("calls translateMatrixOnX once", () => expect(translateMatrixOnX).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(translateMatrixOnX).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the number of meters", () => expect(translateMatrixOnX).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -546,7 +546,7 @@ describe("transform", () => {
       transform.__get__("translateOnY")(37.4)
     })
 
-    it("calls translateMatrixOnY once", () => expect(translateMatrixOnY.calls.count()).toEqual(1))
+    it("calls translateMatrixOnY once", () => expect(translateMatrixOnY).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(translateMatrixOnY).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the number of meters", () => expect(translateMatrixOnY).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -561,7 +561,7 @@ describe("transform", () => {
       transform.__get__("translateOnZ")(37.4)
     })
 
-    it("calls translateMatrixOnZ once", () => expect(translateMatrixOnZ.calls.count()).toEqual(1))
+    it("calls translateMatrixOnZ once", () => expect(translateMatrixOnZ).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(translateMatrixOnZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the number of meters", () => expect(translateMatrixOnZ).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -576,7 +576,7 @@ describe("transform", () => {
       transform.__get__("rotateAroundX")(37.4)
     })
 
-    it("calls rotateMatrixAroundX once", () => expect(rotateMatrixAroundX.calls.count()).toEqual(1))
+    it("calls rotateMatrixAroundX once", () => expect(rotateMatrixAroundX).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(rotateMatrixAroundX).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the number of radians", () => expect(rotateMatrixAroundX).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -591,7 +591,7 @@ describe("transform", () => {
       transform.__get__("rotateAroundY")(37.4)
     })
 
-    it("calls rotateMatrixAroundY once", () => expect(rotateMatrixAroundY.calls.count()).toEqual(1))
+    it("calls rotateMatrixAroundY once", () => expect(rotateMatrixAroundY).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(rotateMatrixAroundY).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the number of radians", () => expect(rotateMatrixAroundY).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -606,7 +606,7 @@ describe("transform", () => {
       transform.__get__("rotateAroundZ")(37.4)
     })
 
-    it("calls rotateMatrixAroundZ once", () => expect(rotateMatrixAroundZ.calls.count()).toEqual(1))
+    it("calls rotateMatrixAroundZ once", () => expect(rotateMatrixAroundZ).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(rotateMatrixAroundZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the number of radians", () => expect(rotateMatrixAroundZ).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -621,7 +621,7 @@ describe("transform", () => {
       transform.__get__("scaleOnX")(37.4)
     })
 
-    it("calls scaleMatrixOnX once", () => expect(scaleMatrixOnX.calls.count()).toEqual(1))
+    it("calls scaleMatrixOnX once", () => expect(scaleMatrixOnX).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(scaleMatrixOnX).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the scale factor", () => expect(scaleMatrixOnX).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -636,7 +636,7 @@ describe("transform", () => {
       transform.__get__("scaleOnY")(37.4)
     })
 
-    it("calls scaleMatrixOnY once", () => expect(scaleMatrixOnY.calls.count()).toEqual(1))
+    it("calls scaleMatrixOnY once", () => expect(scaleMatrixOnY).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(scaleMatrixOnY).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the scale factor", () => expect(scaleMatrixOnY).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
@@ -651,7 +651,7 @@ describe("transform", () => {
       transform.__get__("scaleOnZ")(37.4)
     })
 
-    it("calls scaleMatrixOnZ once", () => expect(scaleMatrixOnZ.calls.count()).toEqual(1))
+    it("calls scaleMatrixOnZ once", () => expect(scaleMatrixOnZ).toHaveBeenCalledTimes(1))
     it("uses the transform", () => expect(scaleMatrixOnZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
     it("uses the scale factor", () => expect(scaleMatrixOnZ).toHaveBeenCalledWith(jasmine.anything(), 37.4))
   })
