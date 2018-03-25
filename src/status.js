@@ -3,9 +3,9 @@ function setStatus(to) {
   if (element) {
     if (to) {
       element.textContent = to
-      element.display = "block"
+      element.style.display = "block"
     } else {
-      element.display = "none"
+      element.style.display = "none"
     }
   }
 }
