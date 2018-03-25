@@ -5,5 +5,8 @@ node_js:
 install:
   - npm install
 script:
-  - npm run-script prepublish
+  - npm run-script babel
+  - npm test
+  - npm run-script uglify
   - npm run-script upload-coverage
+  - npm run-script build-html
