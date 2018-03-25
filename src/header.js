@@ -4,3 +4,5 @@
 onerror = handleError
 
 setStatus("Loading, please wait...")
+
+onload = setup
