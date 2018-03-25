@@ -3,7 +3,14 @@ let renderLoopLastTimestamp = null
 
 let render
 
+function shouldStartRenderLoop() {
+  if (errorEncountered) return false
+  if (!focused) return false
+  return true
+}
+
 function startRenderLoop() {
+  if (!shouldStartRenderLoop()) return
   if (renderLoopAnimationFrame !== null) return
   renderLoopAnimationFrame = requestAnimationFrame(renderLoop)
 }
