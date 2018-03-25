@@ -1,6 +1,7 @@
 {
     "name": "celluloid",
     "description": "Realtime 3D cel shading, anywhere.",
+    "version": "0.0.0",
     "scripts": {
         "watch": "npm run-script prepublish && npm-run-all --parallel watch-babel watch-test watch-uglify",
         "watch-babel": "chokidar src/**.js --command \"npm run-script babel\"",
