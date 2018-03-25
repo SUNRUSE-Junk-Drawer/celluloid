@@ -23,3 +23,39 @@ function transformStack(contents) {
     popTransformStack()
   }
 }
+
+function translateOnX(meters) {
+  translateMatrixOnX(transform, meters)
+}
+
+function translateOnY(meters) {
+  translateMatrixOnY(transform, meters)
+}
+
+function translateOnZ(meters) {
+  translateMatrixOnZ(transform, meters)
+}
+
+function rotateAroundX(radians) {
+  rotateMatrixAroundX(transform, radians)
+}
+
+function rotateAroundY(radians) {
+  rotateMatrixAroundY(transform, radians)
+}
+
+function rotateAroundZ(radians) {
+  rotateMatrixAroundZ(transform, radians)
+}
+
+function scaleOnX(factor) {
+  scaleMatrixOnX(transform, factor)
+}
+
+function scaleOnY(factor) {
+  scaleMatrixOnY(transform, factor)
+}
+
+function scaleOnZ(factor) {
+  scaleMatrixOnZ(transform, factor)
+}
