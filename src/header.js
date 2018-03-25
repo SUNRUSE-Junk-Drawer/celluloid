@@ -6,5 +6,3 @@ onerror = function (message, source, lineno, colno, error) {
 }
 
 setStatus("Loading, please wait...")
-
-throw new Error("AHA")
