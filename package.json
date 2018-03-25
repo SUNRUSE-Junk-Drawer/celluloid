@@ -14,7 +14,7 @@
         "uglify": "uglifyjs --compress --mangle --toplevel src/header.js dist/index.js --output dist/index.min.js",
         "build-html": "babel-node ./build-html.js",
         "host": "mkdirp dist && cd dist && http-static",
-        "upload-coverage": "nyc --reporter lcovonly --include dist/index.js jasmine | coveralls"
+        "upload-coverage": "nyc report --reporter=text-lcov | coveralls"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0-beta.42",
