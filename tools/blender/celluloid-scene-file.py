@@ -25,6 +25,10 @@ def initialize_lamp_data(lamp_data):
   lamp_data.shadow_buffer_samples = 1
   lamp_data.distance = 99999
 
+def initialize_camera_data(camera_data):
+  camera_data.show_limits = True
+  camera_data.lens_unit = "FOV"
+
 class CelluloidPanel(bpy.types.Panel):
   bl_idname = "OBJECT_PT_celluloid"
   bl_label = "Celluloid"
@@ -51,6 +55,8 @@ class SetupCelluloidScene(bpy.types.Operator):
     for object in bpy.context.scene.objects:
       if object.type == "LAMP" and object.name != "ambientLight":
         initialize_lamp(object)
+      elif object.type == "CAMERA":
+        initialize_camera_data(object.data)
 
     if "ambient_light" not in bpy.context.scene.objects:
       ambient_light_data = bpy.data.lamps.new(name="ambientLight", type="SUN")
