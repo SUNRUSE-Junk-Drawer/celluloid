@@ -176,8 +176,8 @@ Describes a "polygon soup".
 ```json
 {
 	"parent": "any key of celluloidScene.data.sceneNode, or null if none",
-	"type": "any key of celluloidScene.data",
-  "data": "any key of celluloidScene.data[type]",
+	"type": "any key of celluloidScene.data, or null if empty",
+  "data": "any key of celluloidScene.data[type], or null if empty",
 		"location": [
 		"any x number animation",
 		"any y number animation",
