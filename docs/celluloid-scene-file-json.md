@@ -35,8 +35,8 @@ The value specified is held until the next keyframe.
 ```json
 {
   "type": "constant",
-  "fromKeyframe": "any number",
-  "value": "any number"
+  "startsOnFrame": "any number",
+  "withValue": "any number"
 }
 ```
 
@@ -47,8 +47,8 @@ The value specified interpolates linearly to the next keyframe's value.
 ```json
 {
   "type": "linear",
-  "fromKeyframe": "any number",
-  "fromValue": "any number"
+  "startsOnFrame": "any number",
+  "withValue": "any number"
 }
 ```
 
@@ -59,7 +59,7 @@ The value is false until the next keyframe.
 ```json
 {
   "type": "false",
-  "fromKeyframe": "any number"
+  "startsOnFrame": "any number"
 }
 ```
 
@@ -70,7 +70,7 @@ The value is false until the next keyframe.
 ```json
 {
   "type": "true",
-  "fromKeyframe": "any number"
+  "startsOnFrame": "any number"
 }
 ```
 
@@ -178,7 +178,7 @@ Describes a "polygon soup".
 	"parent": "any key of celluloidScene.data.sceneNode, or null if none",
 	"type": "any key of celluloidScene.data, or null if empty",
   "data": "any key of celluloidScene.data[type], or null if empty",
-		"location": [
+  "location": [
 		"any x number animation",
 		"any y number animation",
 		"any z number animation"
