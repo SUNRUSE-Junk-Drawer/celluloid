@@ -61,9 +61,9 @@ class SetupCelluloidScene(bpy.types.Operator):
     if "ambientLight" not in bpy.context.scene.objects:
       ambient_light_data = bpy.data.lamps.new(name="ambientLight", type="SUN")
       ambient_light_data.energy = 0
+      ambient_light_data.animation_data_create()
+      ambient_light_data.animation_data.action = bpy.data.actions.new(name="")
       ambient_light = bpy.data.objects.new("ambientLight", ambient_light_data)
-      ambient_light.animation_data_create()
-      ambient_light.animation_data.action = bpy.data.actions.new(name="")
       ambient_light.rotation_euler[0] = 1
       ambient_light.rotation_euler[1] = 1
       ambient_light.rotation_euler[2] = 1
