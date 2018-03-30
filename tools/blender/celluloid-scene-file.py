@@ -58,7 +58,7 @@ class SetupCelluloidScene(bpy.types.Operator):
       elif object.type == "CAMERA":
         initialize_camera_data(object.data)
 
-    if "ambient_light" not in bpy.context.scene.objects:
+    if "ambientLight" not in bpy.context.scene.objects:
       ambient_light_data = bpy.data.lamps.new(name="ambientLight", type="SUN")
       ambient_light_data.energy = 0
       ambient_light = bpy.data.objects.new("ambientLight", ambient_light_data)
