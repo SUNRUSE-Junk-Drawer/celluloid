@@ -85,11 +85,11 @@ The value is false until the next keyframe.
     },
     "ambientLight": {
       "color": [
-        "any red number animation",
-        "any green number animation",
-        "any blue number animation"
+        "any red animation",
+        "any green animation",
+        "any blue animation"
       ],
-      "energy": "any number animation"
+      "energy": "any animation"
     },
     "data": {
       "any data type": {
@@ -109,12 +109,12 @@ Describes a material which is applicable to polygons of meshes.
 ```json
 {
 	"diffuseColor": [
-		"any red number animation",
-		"any green number animation",
-		"any blue number animation"
+		"any red animation",
+		"any green animation",
+		"any blue animation"
 	],
-	"diffuseIntensity": "any number animation",
-	"emit": "any number animation",
+	"diffuseIntensity": "any animation",
+	"emit": "any animation",
 	"useCastShadows": "any boolean",
 	"useCastShadowsOnly": "any boolean"
 }
@@ -149,15 +149,15 @@ Describes a "polygon soup".
 ```json
 {
 	"color": [
-		"any red number animation",
-		"any green number animation",
-		"any blue number animation"
+		"any red animation",
+		"any green animation",
+		"any blue animation"
 	],
-	"energy": "any number animation",
-	"spotSize": "any angle number animation",
+	"energy": "any animation",
+	"spotSize": "any angle animation",
 	"shadowBufferSize": "any number",
-	"shadowBufferClipStart": "any number animation",
-	"shadowBufferClipEnd": "any number animation"
+	"shadowBufferClipStart": "any animation",
+	"shadowBufferClipEnd": "any animation"
 }
 ```
 
@@ -165,9 +165,9 @@ Describes a "polygon soup".
 
 ```json
 {
-	"clipStart": "any number animation",
-	"clipEnd": "any number animation",
-	"angle": "any number animation"
+	"clipStart": "any animation",
+	"clipEnd": "any animation",
+	"angle": "any animation"
 }
 ```
 
@@ -179,21 +179,21 @@ Describes a "polygon soup".
 	"type": "any key of celluloidScene.data, or null if empty",
   "data": "any key of celluloidScene.data[type], or null if empty",
   "location": [
-		"any x number animation",
-		"any y number animation",
-		"any z number animation"
+		"any x animation",
+		"any y animation",
+		"any z animation"
 	], 
 	"rotation": [
-		"any x number animation",
-		"any y number animation",
-		"any z number animation"
+		"any x animation",
+		"any y animation",
+		"any z animation"
 	],
   "scale": [
-		"any x number animation",
-		"any y number animation",
-		"any z number animation"
+		"any x animation",
+		"any y animation",
+		"any z animation"
 	],
-	"hide": "any boolean animation",
-	"hideRender": "any boolean animation"
+	"hide": "any animation",
+	"hideRender": "any animation"
 }
 ```
