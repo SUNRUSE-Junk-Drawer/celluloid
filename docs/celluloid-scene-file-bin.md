@@ -96,7 +96,7 @@ These are pre-sorted so that parents appear before children.
 
 - A uint16 specifying the parent scene node, if any, else, 65535.
 - A uint8 specifying the data type, if any, else, 255.
-- A uint16 specifying the data item, if any, else, 65535
+- If a data type was set, a uint16 specifying the data item.
 - Three animations specifying the location on X, Y and Z.
 - Three animations specifying the scale on X, Y and Z.
 - Three animations specifying the rotation on X, Y and Z.
