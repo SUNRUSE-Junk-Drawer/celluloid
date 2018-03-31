@@ -7,6 +7,6 @@ install:
 script:
   - npm run-script babel
   - npm test
-  - npm run-script uglify
+  - npm run-script uglify-for-hosting
   - npm run-script upload-coverage
   - npm run-script build-html

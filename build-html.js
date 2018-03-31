@@ -60,8 +60,25 @@ mkdirp("dist/icons", err => {
         imagemin(allPaths.filter(path => path.endsWith(".png")), "dist/icons", { plugins: [imageminPngcrush({ reduce: true })] })
           .catch(reason => { throw reason })
           .then(() => {
-            console.log("Generating HTML...")
-            const html = `
+            console.log("Generating HTML for debugging...")
+            const htmlForDebugging = `
+              <!DOCTYPE html>
+              <html>
+              <head>
+                <meta charset="UTF-8">
+                <title>Celluloid</title>
+                <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, height=device-height, user-scalable=no">
+                ${response.html.join("")}
+              </head>
+              <body style="background: black; color: white; font-family: sans-serif; user-select: none; font-size: 0.5cm;">
+                <div id="status" style="position: absolute; top: 50%; margin-top: -0.5em; line-height: 1em; left: 0; text-align: center; width: 100%;">Loading; please ensure that JavaScript is enabled.</div>
+                <script src="debugger.js"></script>
+              </body>
+              </html>
+            `
+
+            console.log("Generating HTML for hosting...")
+            const htmlForHost = `
               <!DOCTYPE html>
               <html>
               <head>
@@ -77,8 +94,8 @@ mkdirp("dist/icons", err => {
               </html>
             `
 
-            console.log("Minifying HTML...")
-            const minifiedHtml = minify(html, {
+            console.log("Minifying HTML for hosting...")
+            const minifiedHtml = minify(htmlForHost, {
               collapseInlineTagWhitespace: true,
               collapseWhitespace: true,
               minifyCSS: true,
@@ -92,10 +109,15 @@ mkdirp("dist/icons", err => {
               removeStyleLinkTypeAttributes: true,
               removeTagWhitespace: true
             })
-            console.log("Writing HTML...")
-            writeFile("dist/index.html", minifiedHtml, err => {
+
+            console.log("Writing HTML for debugging...")
+            writeFile("dist/debugger.html", htmlForDebugging, err => {
               if (err) throw err
-              console.log("Done.")
+              console.log("Writing HTML for hosting...")
+              writeFile("dist/index.html", minifiedHtml, err => {
+                if (err) throw err
+                console.log("Done.")
+              })
             })
           })
       })
