@@ -3,7 +3,7 @@
     "description": "Realtime 3D cel shading, anywhere.",
     "version": "0.0.0",
     "scripts": {
-        "start": "npm install && npm-run-all babel test && npm-run-all --parallel watch host build-html",
+        "start": "npm install && npm run-script babel && npm-run-all --parallel watch host build-html",
         "watch": "npm-run-all --parallel watch-babel watch-test watch-uglify watch-build-html",
         "watch-babel": "chokidar src/**.js --command \"npm run-script babel\"",
         "watch-test": "chokidar dist/index.js spec/**.js --command \"npm test\"",
