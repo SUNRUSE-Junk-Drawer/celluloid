@@ -74,3 +74,64 @@ function parseUtf8(parser) {
     output += String.fromCodePoint(charCode)
   }
 }
+
+const fileCache = {}
+
+function createFileHandle(url, callback) {
+  if (Object.prototype.hasOwnProperty.call(fileCache, url)) {
+    const file = fileCache[url]
+    file.callbacks.push(callback)
+    if (file.callbacks.length > 1) {
+      if (file.data !== null) {
+        callback(file.data)
+      }
+    } else {
+      const nonce = file.nonce
+      readFileAsArrayBuffer(url, arrayBuffer => {
+        if (file.nonce == nonce) {
+          file.data = arrayBuffer
+          file.callbacks.forEach(callback => callback(arrayBuffer))
+        }
+      })
+    }
+  } else {
+    const file = {
+      nonce: 0,
+      data: null,
+      callbacks: [callback]
+    }
+    fileCache[url] = file
+    readFileAsArrayBuffer(url, arrayBuffer => {
+      if (!file.nonce) {
+        file.data = arrayBuffer
+        file.callbacks.forEach(callback => callback(arrayBuffer))
+      }
+    })
+  }
+}
+
+function handleFileChange(url) {
+  if (Object.prototype.hasOwnProperty.call(fileCache, url)) {
+    const file = fileCache[url]
+    if (file.callbacks.length) {
+      file.nonce++
+      file.data = null
+      const nonce = file.nonce
+      readFileAsArrayBuffer(url, arrayBuffer => {
+        if (file.nonce == nonce) {
+          file.data = arrayBuffer
+          file.callbacks.forEach(callback => callback(arrayBuffer))
+        }
+      })
+    }
+  }
+}
+
+function destroyFileHandle(url, callback) {
+  const file = fileCache[url]
+  file.callbacks.splice(file.callbacks.indexOf(callback), 1)
+  if (!file.callbacks.length) {
+    file.nonce++
+    file.data = null
+  }
+}
