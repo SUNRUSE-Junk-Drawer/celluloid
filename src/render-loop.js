@@ -18,17 +18,19 @@ function checkRenderLoop() {
     }
     renderLoopAnimationFrame = renderLoopLastTimestamp = null
   } else {
-    setStatus()
     if (renderLoopAnimationFrame === null) {
       renderLoopAnimationFrame = requestAnimationFrame(renderLoop)
+      setStatus("Resuming...")
     }
   }
 }
 
 function renderLoop(timestamp) {
-  const lastTimestamp = renderLoopLastTimestamp === null ? timestamp : renderLoopLastTimestamp
+  const firstFrame = renderLoopLastTimestamp === null
+  const lastTimestamp = firstFrame ? timestamp : renderLoopLastTimestamp
   renderLoopAnimationFrame = renderLoopLastTimestamp = null
   render((timestamp - lastTimestamp) / 1000)
   renderLoopAnimationFrame = requestAnimationFrame(renderLoop)
   renderLoopLastTimestamp = timestamp
+  if (firstFrame) setStatus()
 }

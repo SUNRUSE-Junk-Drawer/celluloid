@@ -112,8 +112,7 @@ describe("renderLoop", () => {
           it("does not cancel an animation frame", () => expect(cancelAnimationFrame).not.toHaveBeenCalled())
           it("does not change the stored animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toEqual("Test Existing Animation Frame"))
           it("does not change the stored timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toBeNull())
-          it("sets one status", () => expect(setStatus).toHaveBeenCalledTimes(1))
-          it("sets the status to nothing", () => expect(setStatus).toHaveBeenCalledWith())
+          it("does not set a status", () => expect(setStatus).not.toHaveBeenCalled())
         })
 
         describe("with a stored timestamp", () => {
@@ -125,8 +124,7 @@ describe("renderLoop", () => {
           it("does not cancel an animation frame", () => expect(cancelAnimationFrame).not.toHaveBeenCalled())
           it("does not change the stored animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toEqual("Test Existing Animation Frame"))
           it("does not change the stored timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toEqual(2369.23))
-          it("sets one status", () => expect(setStatus).toHaveBeenCalledTimes(1))
-          it("sets the status to nothing", () => expect(setStatus).toHaveBeenCalledWith())
+          it("does not set a status", () => expect(setStatus).not.toHaveBeenCalled())
         })
       })
 
@@ -142,13 +140,13 @@ describe("renderLoop", () => {
         it("stores the requested animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toEqual("Test Requested Animation Frame"))
         it("does not change the stored timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toBeNull())
         it("sets one status", () => expect(setStatus).toHaveBeenCalledTimes(1))
-        it("sets the status to nothing", () => expect(setStatus).toHaveBeenCalledWith())
+        it("sets the status to indicate that the first frame is coming", () => expect(setStatus).toHaveBeenCalledWith("Resuming..."))
       })
     })
   })
 
   describe("renderLoop", () => {
-    let requestAnimationFrame, cancelAnimationFrame, render
+    let requestAnimationFrame, cancelAnimationFrame, render, setStatus
     beforeEach(() => {
       index.__set__("renderLoopAnimationFrame", "Test Existing Animation Frame")
       requestAnimationFrame = jasmine.createSpy("requestAnimationFrame")
@@ -156,6 +154,8 @@ describe("renderLoop", () => {
       index.__set__("requestAnimationFrame", requestAnimationFrame)
       render = jasmine.createSpy("render")
       index.__set__("render", render)
+      setStatus = jasmine.createSpy("setStatus")
+      index.__set__("setStatus", setStatus)
     })
 
     describe("on the first frame", () => {
@@ -167,6 +167,8 @@ describe("renderLoop", () => {
         it("requests an animation frame for renderLoop", () => expect(requestAnimationFrame).toHaveBeenCalledWith(index.__get__("renderLoop")))
         it("stores the requested animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toEqual("Test Requested Animation Frame"))
         it("stores the timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toEqual(8973.21))
+        it("sets the status once", () => expect(setStatus).toHaveBeenCalledTimes(1))
+        it("clears the status message", () => expect(setStatus).toHaveBeenCalledWith())
       })
 
       describe("on an exception", () => {
@@ -179,6 +181,7 @@ describe("renderLoop", () => {
         it("does not request an animation frame", () => expect(requestAnimationFrame).not.toHaveBeenCalled())
         it("stores null as the animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toBeNull())
         it("stores null as the timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toBeNull())
+        it("does not set the status", () => expect(setStatus).not.toHaveBeenCalled())
       })
     })
 
@@ -196,6 +199,7 @@ describe("renderLoop", () => {
         it("requests an animation frame for renderLoop", () => expect(requestAnimationFrame).toHaveBeenCalledWith(index.__get__("renderLoop")))
         it("stores the requested animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toEqual("Test Requested Animation Frame"))
         it("stores the timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toEqual(8973.21))
+        it("does not set the status", () => expect(setStatus).not.toHaveBeenCalled())
       })
 
       describe("on an exception", () => {
@@ -211,6 +215,7 @@ describe("renderLoop", () => {
         it("does not request an animation frame", () => expect(requestAnimationFrame).not.toHaveBeenCalled())
         it("stores null as the animation frame", () => expect(index.__get__("renderLoopAnimationFrame")).toBeNull())
         it("stores null as the timestamp", () => expect(index.__get__("renderLoopLastTimestamp")).toBeNull())
+        it("does not set the status", () => expect(setStatus).not.toHaveBeenCalled())
       })
     })
   })
