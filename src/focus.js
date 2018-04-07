@@ -3,12 +3,12 @@ function setupFocus() {
   addEventListener("focus", () => {
     if (focused) return
     focused = true
-    startRenderLoop()
+    checkRenderLoop()
   })
 
   addEventListener("blur", () => {
     if (!focused) return
     focused = false
-    stopRenderLoop()
+    checkRenderLoop()
   })
 }

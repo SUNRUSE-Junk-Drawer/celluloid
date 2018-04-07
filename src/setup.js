@@ -1,4 +1,4 @@
 function setup() {
   setupFocus()
-  startRenderLoop()
+  checkRenderLoop()
 }

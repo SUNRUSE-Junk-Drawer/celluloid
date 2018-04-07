@@ -3,22 +3,26 @@ let renderLoopLastTimestamp = null
 
 let render
 
-function shouldStartRenderLoop() {
-  if (errorEncountered) return false
-  if (!focused) return false
-  return true
+function statusToShow() {
+  return errorEncountered
+    || (!focused && "Paused")
+    || null
 }
 
-function startRenderLoop() {
-  if (!shouldStartRenderLoop()) return
-  if (renderLoopAnimationFrame !== null) return
-  renderLoopAnimationFrame = requestAnimationFrame(renderLoop)
-}
-
-function stopRenderLoop() {
-  if (renderLoopAnimationFrame === null) return
-  cancelAnimationFrame(renderLoopAnimationFrame)
-  renderLoopAnimationFrame = renderLoopLastTimestamp = null
+function checkRenderLoop() {
+  const status = statusToShow()
+  if (status) {
+    setStatus(status)
+    if (renderLoopAnimationFrame !== null) {
+      cancelAnimationFrame(renderLoopAnimationFrame)
+    }
+    renderLoopAnimationFrame = renderLoopLastTimestamp = null
+  } else {
+    setStatus()
+    if (renderLoopAnimationFrame === null) {
+      renderLoopAnimationFrame = requestAnimationFrame(renderLoop)
+    }
+  }
 }
 
 function renderLoop(timestamp) {

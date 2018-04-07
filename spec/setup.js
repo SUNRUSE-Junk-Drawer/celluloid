@@ -1,15 +1,15 @@
 describe("setup", () => {
   const rewire = require("rewire")
-  let index, setupFocus, startRenderLoop
+  let index, setupFocus, checkRenderLoop
   beforeEach(() => {
     index = rewire("../dist/index")
     setupFocus = jasmine.createSpy("setupFocus")
     index.__set__("setupFocus", setupFocus)
-    startRenderLoop = jasmine.createSpy("startRenderLoop")
-    index.__set__("startRenderLoop", startRenderLoop)
+    checkRenderLoop = jasmine.createSpy("checkRenderLoop")
+    index.__set__("checkRenderLoop", checkRenderLoop)
     index.__get__("setup")()
   })
 
   it("sets up focus once", () => expect(setupFocus).toHaveBeenCalledTimes(1))
-  it("starts the render loop once", () => expect(startRenderLoop).toHaveBeenCalledTimes(1))
+  it("starts the render loop once", () => expect(checkRenderLoop).toHaveBeenCalledTimes(1))
 })
