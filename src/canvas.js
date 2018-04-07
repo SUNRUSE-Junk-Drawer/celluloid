@@ -8,5 +8,7 @@ function setupCanvas() {
   canvas.style.width = "100%"
   canvas.style.height = "100%"
   canvas.style.visibility = "hidden"
+  canvas.addEventListener("webglcontextlost", handleContextLost)
+  canvas.addEventListener("webglcontextrestored", handleContextRestored)
   document.body.appendChild(canvas)
 }

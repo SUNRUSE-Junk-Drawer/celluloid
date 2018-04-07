@@ -1,0 +1,7 @@
+function handleContextLost() {
+
+}
+
+function handleContextRestored() {
+
+}

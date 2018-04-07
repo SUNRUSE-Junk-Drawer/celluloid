@@ -6,8 +6,9 @@ describe("canvas", () => {
   it("defines canvas as null", () => expect(index.__get__("canvas")).toBeNull())
 
   describe("setupCanvas", () => {
-    let appendChild, createElement, canvas
+    let appendChild, createElement, addEventListener, canvas
     beforeEach(() => {
+      addEventListener = jasmine.createSpy("addEventListener")
       canvas = {
         style: {
           position: "Test Existing Position",
@@ -17,7 +18,8 @@ describe("canvas", () => {
           height: "Test Existing Height",
           visibility: "Test Existing Visibility",
           testMiscellaneousKey: "Test Miscellaneous Value"
-        }
+        },
+        addEventListener
       }
       createElement = jasmine.createSpy("createElement")
       createElement.and.returnValue(canvas)
@@ -28,6 +30,8 @@ describe("canvas", () => {
           appendChild
         }
       })
+      index.__set__("handleContextLost", "Test Handle Context Lost")
+      index.__set__("handleContextRestored", "Test Handle Context Restored")
 
       index.__get__("setupCanvas")()
     })
@@ -42,6 +46,9 @@ describe("canvas", () => {
     it("does not modify other aspects of the canvas's style", () => expect(canvas.style.testMiscellaneousKey).toEqual("Test Miscellaneous Value"))
     it("appends one element to the document body", () => expect(appendChild).toHaveBeenCalledTimes(1))
     it("appends the canvas to the document body", () => expect(appendChild).toHaveBeenCalledWith(canvas))
+    it("adds two event listeners", () => expect(addEventListener).toHaveBeenCalledTimes(2))
+    it("adds a context lost event listener", () => expect(addEventListener).toHaveBeenCalledWith("webglcontextlost", "Test Handle Context Lost"))
+    it("adds a context restored event listener", () => expect(addEventListener).toHaveBeenCalledWith("webglcontextrestored", "Test Handle Context Restored"))
     it("exposes the canvas", () => expect(index.__get__("canvas")).toBe(canvas))
   })
 })
