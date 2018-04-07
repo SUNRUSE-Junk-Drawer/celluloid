@@ -1,8 +1,6 @@
 let renderLoopAnimationFrame = null
 let renderLoopLastTimestamp = null
 
-let render
-
 function statusToShow() {
   return errorEncountered
     || (!focused && "Paused")
