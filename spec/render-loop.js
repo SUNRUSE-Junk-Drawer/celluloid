@@ -9,11 +9,11 @@ describe("renderLoop", () => {
   describe("when focused", () => {
     beforeEach(() => index.__set__("focused", true))
     describe("when an error has been encountered", () => {
-      beforeEach(() => index.__set__("errorEncountered", true))
+      beforeEach(() => index.__set__("errorEncountered", "Test Error"))
       it("returns false", () => expect(index.__get__("shouldStartRenderLoop")()).toBeFalsy())
     })
     describe("when an error has not been encountered", () => {
-      beforeEach(() => index.__set__("errorEncountered", false))
+      beforeEach(() => index.__set__("errorEncountered", null))
       it("returns true", () => expect(index.__get__("shouldStartRenderLoop")()).toBeTruthy())
     })
   })
@@ -21,11 +21,11 @@ describe("renderLoop", () => {
   describe("when not focused", () => {
     beforeEach(() => index.__set__("focused", false))
     describe("when an error has been encountered", () => {
-      beforeEach(() => index.__set__("errorEncountered", true))
+      beforeEach(() => index.__set__("errorEncountered", "Test Error"))
       it("returns false", () => expect(index.__get__("shouldStartRenderLoop")()).toBeFalsy())
     })
     describe("when an error has not been encountered", () => {
-      beforeEach(() => index.__set__("errorEncountered", false))
+      beforeEach(() => index.__set__("errorEncountered", null))
       it("returns false", () => expect(index.__get__("shouldStartRenderLoop")()).toBeFalsy())
     })
   })
