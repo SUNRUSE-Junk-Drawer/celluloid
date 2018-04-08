@@ -1,8 +1,6 @@
 describe("setup", () => {
-  const rewire = require("rewire")
-  let index, setupFocus, setupCanvas, checkRenderLoop
-  beforeEach(() => {
-    index = rewire("../dist/index")
+  let setupFocus, setupCanvas, checkRenderLoop
+  setup(() => {
     setupFocus = jasmine.createSpy("setupFocus")
     index.__set__("setupFocus", setupFocus)
     setupCanvas = jasmine.createSpy("setupCanvas")
@@ -12,7 +10,9 @@ describe("setup", () => {
     index.__get__("setup")()
   })
 
-  it("sets up focus once", () => expect(setupFocus).toHaveBeenCalledTimes(1))
-  it("sets up the canvas once", () => expect(setupCanvas).toHaveBeenCalledTimes(1))
-  it("starts the render loop once", () => expect(checkRenderLoop).toHaveBeenCalledTimes(1))
+  assert({
+    "sets up focus once": () => expect(setupFocus).toHaveBeenCalledTimes(1),
+    "sets up the canvas once": () => expect(setupCanvas).toHaveBeenCalledTimes(1),
+    "starts the render loop once": () => expect(checkRenderLoop).toHaveBeenCalledTimes(1)
+  })
 })

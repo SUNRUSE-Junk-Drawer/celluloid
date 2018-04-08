@@ -1,18 +1,20 @@
 describe("gl", () => {
-  const rewire = require("rewire")
-  let index
-  index = rewire("../dist/index")
-
-  it("defines gl as null", () => expect(index.__get__("gl")).toBeNull())
-  it("defines glNonce as a number", () => expect(index.__get__("glNonce")).toEqual(jasmine.any(Number)))
+  assert({
+    "defines gl as null": () => expect(index.__get__("gl")).toBeNull(),
+    "defines glNonce as a number": () => expect(index.__get__("glNonce")).toEqual(jasmine.any(Number))
+  })
 
   describe("handleContextLost", () => {
-    beforeEach(() => index.__get__("handleContextLost")())
-    it("does nothing", () => { })
+    setup(() => index.__get__("handleContextLost")())
+    assert({
+      "does nothing": () => { }
+    })
   })
 
   describe("handleContextRestored", () => {
-    beforeEach(() => index.__get__("handleContextRestored")())
-    it("does nothing", () => { })
+    setup(() => index.__get__("handleContextRestored")())
+    assert({
+      "does nothing": () => { }
+    })
   })
 })

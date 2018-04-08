@@ -1,59 +1,52 @@
 describe("transform", () => {
-  const rewire = require("rewire")
-  let transform
-  beforeEach(() => transform = rewire("../dist/index"))
-
-  it("defines transform, a matrix", () => {
-    expect(transform.__get__("transform")).toEqual(jasmine.any(Float32Array))
-    expect(transform.__get__("transform").length).toEqual(16)
-  })
-
-  it("defines transform as identity by default", () => {
-    expect(Array.from(transform.__get__("transform"))).toEqual([
-      1, 0, 0, 0,
-      0, 1, 0, 0,
-      0, 0, 1, 0,
-      0, 0, 0, 1
-    ])
+  assert({
+    "defines transform, a matrix": () => {
+      expect(index.__get__("transform")).toEqual(jasmine.any(Float32Array))
+      expect(index.__get__("transform").length).toEqual(16)
+    },
+    "defines transform as identity by default": () => {
+      expect(Array.from(index.__get__("transform"))).toEqual([
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ])
+    }
   })
 
   describe("transformStack", () => {
-    let events
-    beforeEach(() => events = [])
-
-    const runSuccessfully = (callbacks, expectedEvents) => describe("when successful", () => {
-      it("generates the expected events", () => {
-        transform.__set__("pushTransformStack", () => events.push("Stack Pushed"))
-        transform.__set__("popTransformStack", () => events.push("Stack Popped"))
-
-        callbacks.forEach(callback => transform.__get__("transformStack")(callback))
-
-        expect(events).toEqual(expectedEvents)
-      })
+    const events = []
+    setup(() => {
+      index.__set__("pushTransformStack", () => events.push("Stack Pushed"))
+      index.__set__("popTransformStack", () => events.push("Stack Popped"))
     })
 
-    const runWithException = (description, callbacks, expectedEvents) => describe(description, () => {
-      it("generates the expected events", () => {
-        transform.__set__("pushTransformStack", () => events.push("Stack Pushed"))
-        transform.__set__("popTransformStack", () => events.push("Stack Popped"))
+    const runSuccessfully = (callbacks, expectedEvents) => () => {
+      events.length = 0
 
-        callbacks.slice(0, -1).forEach(callback => transform.__get__("transformStack")(callback))
-        expect(() => transform.__get__("transformStack")(callbacks[callbacks.length - 1])).toThrow("Test Exception")
+      callbacks.forEach(callback => index.__get__("transformStack")(callback))
 
-        expect(events).toEqual(expectedEvents)
-      })
-    })
+      expect(events).toEqual(expectedEvents)
+    }
 
-    describe("one call", () => {
-      runSuccessfully([
+    const runWithException = (callbacks, expectedEvents) => () => {
+      events.length = 0
+
+      callbacks.slice(0, -1).forEach(callback => index.__get__("transformStack")(callback))
+      expect(() => index.__get__("transformStack")(callbacks[callbacks.length - 1])).toThrow("Test Exception")
+
+      expect(events).toEqual(expectedEvents)
+    }
+
+    assert({
+      "one call": runSuccessfully([
         () => events.push("Callback A")
       ], [
           "Stack Pushed",
           "Callback A",
           "Stack Popped"
-        ])
-
-      runWithException("when the callback throws an exception", [
+        ]),
+      "one call when the callback throws an exception": runWithException([
         () => {
           events.push("Callback A")
           throw "Test Exception"
@@ -62,11 +55,8 @@ describe("transform", () => {
           "Stack Pushed",
           "Callback A",
           "Stack Popped"
-        ])
-    })
-
-    describe("two calls", () => {
-      runSuccessfully([
+        ]),
+      "two calls": runSuccessfully([
         () => events.push("Callback A"),
         () => events.push("Callback B")
       ], [
@@ -76,10 +66,8 @@ describe("transform", () => {
           "Stack Pushed",
           "Callback B",
           "Stack Popped"
-        ])
-
-
-      runWithException("when the second callback throws an exception", [
+        ]),
+      "two calls when the second callback throws an exception": runWithException([
         () => events.push("Callback A"),
         () => {
           events.push("Callback B")
@@ -92,14 +80,11 @@ describe("transform", () => {
           "Stack Pushed",
           "Callback B",
           "Stack Popped"
-        ])
-    })
-
-    describe("two nested calls", () => {
-      runSuccessfully([
+        ]),
+      "two nested calls": runSuccessfully([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A End")
         }
       ], [
@@ -110,13 +95,11 @@ describe("transform", () => {
           "Stack Popped",
           "Callback A End",
           "Stack Popped"
-        ])
-
-
-      runWithException("when the nested callback throws an exception", [
+        ]),
+      "two nested calls when the nested callback throws an exception": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback B")
             throw "Test Exception"
           })
@@ -129,12 +112,11 @@ describe("transform", () => {
           "Callback B",
           "Stack Popped",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown after the nested callback", [
+        ]),
+      "two nested calls when an exception is thrown after the nested callback": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback B")
           })
           events.push("Callback A End")
@@ -148,19 +130,16 @@ describe("transform", () => {
           "Stack Popped",
           "Callback A End",
           "Stack Popped"
-        ])
-    })
-
-    describe("two calls containing one each", () => {
-      runSuccessfully([
+        ]),
+      "two calls containing one each": runSuccessfully([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A End")
         },
         () => {
           events.push("Callback C Start")
-          transform.__get__("transformStack")(() => events.push("Callback D"))
+          index.__get__("transformStack")(() => events.push("Callback D"))
           events.push("Callback C End")
         }
       ], [
@@ -178,12 +157,11 @@ describe("transform", () => {
           "Stack Popped",
           "Callback C End",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown before the second nested call", [
+        ]),
+      "two calls containing one each when an exception is thrown before the second nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A End")
         },
         () => {
@@ -201,17 +179,16 @@ describe("transform", () => {
           "Stack Pushed",
           "Callback C",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown during the second nested call", [
+        ]),
+      "two calls containing one each when an exception is thrown during the second nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A End")
         },
         () => {
           events.push("Callback C Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback D")
             throw "Test Exception"
           })
@@ -231,17 +208,16 @@ describe("transform", () => {
           "Callback D",
           "Stack Popped",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown after the second nested call", [
+        ]),
+      "two calls containing one each when an exception is thrown after the second nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A End")
         },
         () => {
           events.push("Callback C Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback D")
           })
           throw "Test Exception"
@@ -260,16 +236,13 @@ describe("transform", () => {
           "Callback D",
           "Stack Popped",
           "Stack Popped"
-        ])
-    })
-
-    describe("one call containing two calls", () => {
-      runSuccessfully([
+        ]),
+      "one call containing two calls": runSuccessfully([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A Between")
-          transform.__get__("transformStack")(() => events.push("Callback C"))
+          index.__get__("transformStack")(() => events.push("Callback C"))
           events.push("Callback A End")
         }
       ], [
@@ -284,14 +257,13 @@ describe("transform", () => {
           "Stack Popped",
           "Callback A End",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown during the second nested call", [
+        ]),
+      "one call containing two calls when an exception is thrown during the second nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A Between")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback C")
             throw "Test Exception"
           })
@@ -308,14 +280,13 @@ describe("transform", () => {
           "Callback C",
           "Stack Popped",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown after the second nested call", [
+        ]),
+      "one call containing two calls when an exception is thrown after the second nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => events.push("Callback B"))
+          index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A Between")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback C")
           })
           events.push("Callback A End")
@@ -333,16 +304,13 @@ describe("transform", () => {
           "Stack Popped",
           "Callback A End",
           "Stack Popped"
-        ])
-    })
-
-    describe("three nested calls", () => {
-      runSuccessfully([
+        ]),
+      "three nested calls": runSuccessfully([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback B Start")
-            transform.__get__("transformStack")(() => events.push("Callback C"))
+            index.__get__("transformStack")(() => events.push("Callback C"))
             events.push("Callback B End")
           })
           events.push("Callback A End")
@@ -359,14 +327,13 @@ describe("transform", () => {
           "Stack Popped",
           "Callback A End",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown after the nested call", [
+        ]),
+      "three nested calls when an exception is thrown after the nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback B Start")
-            transform.__get__("transformStack")(() => events.push("Callback C"))
+            index.__get__("transformStack")(() => events.push("Callback C"))
             events.push("Callback B End")
             throw "Test Exception"
           })
@@ -383,14 +350,13 @@ describe("transform", () => {
           "Callback B End",
           "Stack Popped",
           "Stack Popped"
-        ])
-
-      runWithException("when an exception is thrown during the nested call", [
+        ]),
+      "three nested calls when an exception is thrown during the nested call": runWithException([
         () => {
           events.push("Callback A Start")
-          transform.__get__("transformStack")(() => {
+          index.__get__("transformStack")(() => {
             events.push("Callback B Start")
-            transform.__get__("transformStack")(() => {
+            index.__get__("transformStack")(() => {
               events.push("Callback C")
               throw "Test Exception"
             })
@@ -428,28 +394,32 @@ describe("transform", () => {
     const transformG = generateRandomMatrix()
     const transformH = generateRandomMatrix()
 
-    beforeEach(() => transform.__get__("copyMatrix")(transformA, transform.__get__("transform")))
+    setup(() => index.__get__("copyMatrix")(transformA, index.__get__("transform")))
 
     const pushTransformStack = (expected, changeTo, then) => describe("pushTransformStack", () => {
-      beforeEach(() => transform.__get__("pushTransformStack")())
-      it("does not change the transform", () => {
-        for (let i = 0; i < 16; i++) {
-          expect(transform.__get__("transform")[i]).toBeCloseTo(expected[i])
+      setup(() => index.__get__("pushTransformStack")())
+      assert({
+        "does not change the transform": () => {
+          for (let i = 0; i < 16; i++) {
+            expect(index.__get__("transform")[i]).toBeCloseTo(expected[i])
+          }
         }
       })
       if (then) {
         describe("then", () => {
-          beforeEach(() => transform.__get__("copyMatrix")(changeTo, transform.__get__("transform")))
+          setup(() => index.__get__("copyMatrix")(changeTo, index.__get__("transform")))
           then()
         })
       }
     })
 
     const popTransformStack = (expected, then) => describe("popTransformStack", () => {
-      beforeEach(() => transform.__get__("popTransformStack")())
-      it("reverses the transform", () => {
-        for (let i = 0; i < 16; i++) {
-          expect(transform.__get__("transform")[i]).toBeCloseTo(expected[i])
+      setup(() => index.__get__("popTransformStack")())
+      assert({
+        "reverses the transform": () => {
+          for (let i = 0; i < 16; i++) {
+            expect(index.__get__("transform")[i]).toBeCloseTo(expected[i])
+          }
         }
       })
       if (then) describe("then", then)
@@ -523,136 +493,154 @@ describe("transform", () => {
 
   describe("translateOnX", () => {
     let translateMatrixOnX
-    beforeEach(() => {
+    setup(() => {
       translateMatrixOnX = jasmine.createSpy("translateMatrixOnX")
-      transform.__set__("translateMatrixOnX", translateMatrixOnX)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("translateMatrixOnX", translateMatrixOnX)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("translateOnX")(37.4)
+      index.__get__("translateOnX")(37.4)
     })
 
-    it("calls translateMatrixOnX once", () => expect(translateMatrixOnX).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(translateMatrixOnX).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the number of meters", () => expect(translateMatrixOnX).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls translateMatrixOnX once": () => expect(translateMatrixOnX).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(translateMatrixOnX).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the number of meters": () => expect(translateMatrixOnX).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("translateOnY", () => {
     let translateMatrixOnY
-    beforeEach(() => {
+    setup(() => {
       translateMatrixOnY = jasmine.createSpy("translateMatrixOnY")
-      transform.__set__("translateMatrixOnY", translateMatrixOnY)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("translateMatrixOnY", translateMatrixOnY)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("translateOnY")(37.4)
+      index.__get__("translateOnY")(37.4)
     })
 
-    it("calls translateMatrixOnY once", () => expect(translateMatrixOnY).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(translateMatrixOnY).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the number of meters", () => expect(translateMatrixOnY).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls translateMatrixOnY once": () => expect(translateMatrixOnY).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(translateMatrixOnY).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the number of meters": () => expect(translateMatrixOnY).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("translateOnZ", () => {
     let translateMatrixOnZ
-    beforeEach(() => {
+    setup(() => {
       translateMatrixOnZ = jasmine.createSpy("translateMatrixOnZ")
-      transform.__set__("translateMatrixOnZ", translateMatrixOnZ)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("translateMatrixOnZ", translateMatrixOnZ)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("translateOnZ")(37.4)
+      index.__get__("translateOnZ")(37.4)
     })
 
-    it("calls translateMatrixOnZ once", () => expect(translateMatrixOnZ).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(translateMatrixOnZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the number of meters", () => expect(translateMatrixOnZ).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls translateMatrixOnZ once": () => expect(translateMatrixOnZ).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(translateMatrixOnZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the number of meters": () => expect(translateMatrixOnZ).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("rotateAroundX", () => {
     let rotateMatrixAroundX
-    beforeEach(() => {
+    setup(() => {
       rotateMatrixAroundX = jasmine.createSpy("rotateMatrixAroundX")
-      transform.__set__("rotateMatrixAroundX", rotateMatrixAroundX)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("rotateMatrixAroundX", rotateMatrixAroundX)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("rotateAroundX")(37.4)
+      index.__get__("rotateAroundX")(37.4)
     })
 
-    it("calls rotateMatrixAroundX once", () => expect(rotateMatrixAroundX).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(rotateMatrixAroundX).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the number of radians", () => expect(rotateMatrixAroundX).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls rotateMatrixAroundX once": () => expect(rotateMatrixAroundX).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(rotateMatrixAroundX).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the number of radians": () => expect(rotateMatrixAroundX).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("rotateAroundY", () => {
     let rotateMatrixAroundY
-    beforeEach(() => {
+    setup(() => {
       rotateMatrixAroundY = jasmine.createSpy("rotateMatrixAroundY")
-      transform.__set__("rotateMatrixAroundY", rotateMatrixAroundY)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("rotateMatrixAroundY", rotateMatrixAroundY)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("rotateAroundY")(37.4)
+      index.__get__("rotateAroundY")(37.4)
     })
 
-    it("calls rotateMatrixAroundY once", () => expect(rotateMatrixAroundY).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(rotateMatrixAroundY).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the number of radians", () => expect(rotateMatrixAroundY).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls rotateMatrixAroundY once": () => expect(rotateMatrixAroundY).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(rotateMatrixAroundY).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the number of radians": () => expect(rotateMatrixAroundY).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("rotateAroundZ", () => {
     let rotateMatrixAroundZ
-    beforeEach(() => {
+    setup(() => {
       rotateMatrixAroundZ = jasmine.createSpy("rotateMatrixAroundZ")
-      transform.__set__("rotateMatrixAroundZ", rotateMatrixAroundZ)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("rotateMatrixAroundZ", rotateMatrixAroundZ)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("rotateAroundZ")(37.4)
+      index.__get__("rotateAroundZ")(37.4)
     })
 
-    it("calls rotateMatrixAroundZ once", () => expect(rotateMatrixAroundZ).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(rotateMatrixAroundZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the number of radians", () => expect(rotateMatrixAroundZ).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls rotateMatrixAroundZ once": () => expect(rotateMatrixAroundZ).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(rotateMatrixAroundZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the number of radians": () => expect(rotateMatrixAroundZ).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("scaleOnX", () => {
     let scaleMatrixOnX
-    beforeEach(() => {
+    setup(() => {
       scaleMatrixOnX = jasmine.createSpy("scaleMatrixOnX")
-      transform.__set__("scaleMatrixOnX", scaleMatrixOnX)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("scaleMatrixOnX", scaleMatrixOnX)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("scaleOnX")(37.4)
+      index.__get__("scaleOnX")(37.4)
     })
 
-    it("calls scaleMatrixOnX once", () => expect(scaleMatrixOnX).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(scaleMatrixOnX).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the scale factor", () => expect(scaleMatrixOnX).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls scaleMatrixOnX once": () => expect(scaleMatrixOnX).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(scaleMatrixOnX).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the scale factor": () => expect(scaleMatrixOnX).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("scaleOnY", () => {
     let scaleMatrixOnY
-    beforeEach(() => {
+    setup(() => {
       scaleMatrixOnY = jasmine.createSpy("scaleMatrixOnY")
-      transform.__set__("scaleMatrixOnY", scaleMatrixOnY)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("scaleMatrixOnY", scaleMatrixOnY)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("scaleOnY")(37.4)
+      index.__get__("scaleOnY")(37.4)
     })
 
-    it("calls scaleMatrixOnY once", () => expect(scaleMatrixOnY).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(scaleMatrixOnY).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the scale factor", () => expect(scaleMatrixOnY).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls scaleMatrixOnY once": () => expect(scaleMatrixOnY).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(scaleMatrixOnY).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the scale factor": () => expect(scaleMatrixOnY).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 
   describe("scaleOnZ", () => {
     let scaleMatrixOnZ
-    beforeEach(() => {
+    setup(() => {
       scaleMatrixOnZ = jasmine.createSpy("scaleMatrixOnZ")
-      transform.__set__("scaleMatrixOnZ", scaleMatrixOnZ)
-      transform.__set__("transform", "Test Transform")
+      index.__set__("scaleMatrixOnZ", scaleMatrixOnZ)
+      index.__set__("transform", "Test Transform")
 
-      transform.__get__("scaleOnZ")(37.4)
+      index.__get__("scaleOnZ")(37.4)
     })
 
-    it("calls scaleMatrixOnZ once", () => expect(scaleMatrixOnZ).toHaveBeenCalledTimes(1))
-    it("uses the transform", () => expect(scaleMatrixOnZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()))
-    it("uses the scale factor", () => expect(scaleMatrixOnZ).toHaveBeenCalledWith(jasmine.anything(), 37.4))
+    assert({
+      "calls scaleMatrixOnZ once": () => expect(scaleMatrixOnZ).toHaveBeenCalledTimes(1),
+      "uses the transform": () => expect(scaleMatrixOnZ).toHaveBeenCalledWith("Test Transform", jasmine.anything()),
+      "uses the scale factor": () => expect(scaleMatrixOnZ).toHaveBeenCalledWith(jasmine.anything(), 37.4)
+    })
   })
 })

@@ -1,13 +1,11 @@
 describe("canvas", () => {
-  const rewire = require("rewire")
-  let index
-  beforeEach(() => index = rewire("../dist/index"))
-
-  it("defines canvas as null", () => expect(index.__get__("canvas")).toBeNull())
+  assert({
+    "defines canvas as null": () => expect(index.__get__("canvas")).toBeNull()
+  })
 
   describe("setupCanvas", () => {
     let appendChild, createElement, addEventListener, canvas
-    beforeEach(() => {
+    setup(() => {
       addEventListener = jasmine.createSpy("addEventListener")
       canvas = {
         style: {
@@ -35,20 +33,22 @@ describe("canvas", () => {
 
       index.__get__("setupCanvas")()
     })
-    it("creates one element", () => expect(createElement).toHaveBeenCalledTimes(1))
-    it("creates a canvas", () => expect(createElement).toHaveBeenCalledWith("CANVAS"))
-    it("sets the canvas's style's position to fixed", () => expect(canvas.style.position).toEqual("fixed"))
-    it("sets the canvas's style's left to zero", () => expect(canvas.style.left).toEqual("0"))
-    it("sets the canvas's style's top to zero", () => expect(canvas.style.top).toEqual("0"))
-    it("sets the canvas's style's width to full", () => expect(canvas.style.width).toEqual("100%"))
-    it("sets the canvas's style's height to full", () => expect(canvas.style.height).toEqual("100%"))
-    it("sets the canvas's style's visibility to hidden", () => expect(canvas.style.visibility).toEqual("hidden"))
-    it("does not modify other aspects of the canvas's style", () => expect(canvas.style.testMiscellaneousKey).toEqual("Test Miscellaneous Value"))
-    it("appends one element to the document body", () => expect(appendChild).toHaveBeenCalledTimes(1))
-    it("appends the canvas to the document body", () => expect(appendChild).toHaveBeenCalledWith(canvas))
-    it("adds two event listeners", () => expect(addEventListener).toHaveBeenCalledTimes(2))
-    it("adds a context lost event listener", () => expect(addEventListener).toHaveBeenCalledWith("webglcontextlost", "Test Handle Context Lost"))
-    it("adds a context restored event listener", () => expect(addEventListener).toHaveBeenCalledWith("webglcontextrestored", "Test Handle Context Restored"))
-    it("exposes the canvas", () => expect(index.__get__("canvas")).toBe(canvas))
+    assert({
+      "creates one element": () => expect(createElement).toHaveBeenCalledTimes(1),
+      "creates a canvas": () => expect(createElement).toHaveBeenCalledWith("CANVAS"),
+      "sets the canvas's style's position to fixed": () => expect(canvas.style.position).toEqual("fixed"),
+      "sets the canvas's style's left to zero": () => expect(canvas.style.left).toEqual("0"),
+      "sets the canvas's style's top to zero": () => expect(canvas.style.top).toEqual("0"),
+      "sets the canvas's style's width to full": () => expect(canvas.style.width).toEqual("100%"),
+      "sets the canvas's style's height to full": () => expect(canvas.style.height).toEqual("100%"),
+      "sets the canvas's style's visibility to hidden": () => expect(canvas.style.visibility).toEqual("hidden"),
+      "does not modify other aspects of the canvas's style": () => expect(canvas.style.testMiscellaneousKey).toEqual("Test Miscellaneous Value"),
+      "appends one element to the document body": () => expect(appendChild).toHaveBeenCalledTimes(1),
+      "appends the canvas to the document body": () => expect(appendChild).toHaveBeenCalledWith(canvas),
+      "adds two event listeners": () => expect(addEventListener).toHaveBeenCalledTimes(2),
+      "adds a context lost event listener": () => expect(addEventListener).toHaveBeenCalledWith("webglcontextlost", "Test Handle Context Lost"),
+      "adds a context restored event listener": () => expect(addEventListener).toHaveBeenCalledWith("webglcontextrestored", "Test Handle Context Restored"),
+      "exposes the canvas": () => expect(index.__get__("canvas")).toBe(canvas)
+    })
   })
 })

@@ -3,6 +3,9 @@
   "spec_files": [
     "*.js"
   ],
+  "helpers": [
+    "support/scenario.js"
+  ],
   "stopSpecOnExpectationFailure": false,
   "random": false
 }
