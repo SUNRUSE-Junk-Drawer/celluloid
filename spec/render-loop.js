@@ -5,34 +5,71 @@ describe("renderLoop", () => {
   })
 
   describe("statusToShow", () => {
-    describe("when focused", () => {
-      setup(() => index.__set__("focused", true))
-      describe("when an error has been encountered", () => {
-        setup(() => index.__set__("errorEncountered", "Test Error"))
-        assert({
-          "returns the encountered error": () => expect(index.__get__("statusToShow")()).toEqual("Test Error")
+    describe("when gl is ready", () => {
+      setup(() => index.__set__("glReady", true))
+      describe("when focused", () => {
+        setup(() => index.__set__("focused", true))
+        describe("when an error has been encountered", () => {
+          setup(() => index.__set__("errorEncountered", "Test Error"))
+          assert({
+            "returns the encountered error": () => expect(index.__get__("statusToShow")()).toEqual("Test Error")
+          })
+        })
+        describe("when an error has not been encountered", () => {
+          setup(() => index.__set__("errorEncountered", null))
+          assert({
+            "returns null": () => expect(index.__get__("statusToShow")()).toBeNull()
+          })
         })
       })
-      describe("when an error has not been encountered", () => {
-        setup(() => index.__set__("errorEncountered", null))
-        assert({
-          "returns null": () => expect(index.__get__("statusToShow")()).toBeNull()
+
+      describe("when not focused", () => {
+        setup(() => index.__set__("focused", false))
+        describe("when an error has been encountered", () => {
+          setup(() => index.__set__("errorEncountered", "Test Error"))
+          assert({
+            "returns the encountered error": () => expect(index.__get__("statusToShow")()).toEqual("Test Error")
+          })
+        })
+        describe("when an error has not been encountered", () => {
+          setup(() => index.__set__("errorEncountered", null))
+          assert({
+            "returns \"Paused\"": () => expect(index.__get__("statusToShow")()).toEqual("Paused")
+          })
         })
       })
     })
-
-    describe("when not focused", () => {
-      setup(() => index.__set__("focused", false))
-      describe("when an error has been encountered", () => {
-        setup(() => index.__set__("errorEncountered", "Test Error"))
-        assert({
-          "returns the encountered error": () => expect(index.__get__("statusToShow")()).toEqual("Test Error")
+    describe("when gl is not ready", () => {
+      setup(() => index.__set__("glReady", false))
+      describe("when focused", () => {
+        setup(() => index.__set__("focused", true))
+        describe("when an error has been encountered", () => {
+          setup(() => index.__set__("errorEncountered", "Test Error"))
+          assert({
+            "returns the encountered error": () => expect(index.__get__("statusToShow")()).toEqual("Test Error")
+          })
+        })
+        describe("when an error has not been encountered", () => {
+          setup(() => index.__set__("errorEncountered", null))
+          assert({
+            "returns null": () => expect(index.__get__("statusToShow")()).toEqual("Restarting WebGL...")
+          })
         })
       })
-      describe("when an error has not been encountered", () => {
-        setup(() => index.__set__("errorEncountered", null))
-        assert({
-          "returns \"Paused\"": () => expect(index.__get__("statusToShow")()).toEqual("Paused")
+
+      describe("when not focused", () => {
+        setup(() => index.__set__("focused", false))
+        describe("when an error has been encountered", () => {
+          setup(() => index.__set__("errorEncountered", "Test Error"))
+          assert({
+            "returns the encountered error": () => expect(index.__get__("statusToShow")()).toEqual("Test Error")
+          })
+        })
+        describe("when an error has not been encountered", () => {
+          setup(() => index.__set__("errorEncountered", null))
+          assert({
+            "returns \"Paused\"": () => expect(index.__get__("statusToShow")()).toEqual("Paused")
+          })
         })
       })
     })

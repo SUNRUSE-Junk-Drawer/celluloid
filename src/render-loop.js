@@ -2,7 +2,7 @@ let renderLoopAnimationFrame = null
 let renderLoopLastTimestamp = null
 
 function statusToShow() {
-  return errorEncountered || (!focused && "Paused") || null
+  return errorEncountered || (!focused && "Paused") || (!glReady && "Restarting WebGL...") || null
 }
 
 function checkRenderLoop() {
