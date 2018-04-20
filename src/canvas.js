@@ -12,3 +12,9 @@ function setupCanvas() {
   canvas.addEventListener("webglcontextrestored", handleContextRestored)
   document.body.appendChild(canvas)
 }
+
+function stopCanvas() {
+  if (!canvas) return
+  canvas.removeEventListener("webglcontextlost", handleContextLost)
+  canvas.removeEventListener("webglcontextrestored", handleContextRestored)
+}

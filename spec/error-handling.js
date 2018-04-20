@@ -4,12 +4,14 @@ describe("errorHandling", () => {
   })
 
   describe("handleError", () => {
-    let checkRenderLoop, errorEncounteredAtTimeOfCheckingRenderLoop
+    let checkRenderLoop, errorEncounteredAtTimeOfCheckingRenderLoop, stopCanvas
     setup(() => {
       checkRenderLoop = jasmine.createSpy("checkRenderLoop")
       checkRenderLoop.and.callFake(() => errorEncounteredAtTimeOfCheckingRenderLoop = index.__get__("errorEncountered"))
       index.__set__("checkRenderLoop", checkRenderLoop)
       errorEncounteredAtTimeOfCheckingRenderLoop = null
+      stopCanvas = jasmine.createSpy("stopCanvas")
+      index.__set__("stopCanvas", stopCanvas)
       index.__get__("handleError")("Test Message", "Test Source File", 398, 289, "Test Error")
     })
     assert({
@@ -19,7 +21,8 @@ describe("errorHandling", () => {
       "checks the render loop once": () => expect(checkRenderLoop).toHaveBeenCalledTimes(1),
       "has set errorEncountered by the time of checking the render loop": () => expect(errorEncounteredAtTimeOfCheckingRenderLoop).toEqual(`Unhandled error on line 398, column 289 of "Test Source File":
 \t"Test Message"
-\t"Test Error"`)
+\t"Test Error"`),
+      "stops the canvas once": () => expect(stopCanvas).toHaveBeenCalledTimes(1)
     })
   })
 })
