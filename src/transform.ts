@@ -1,8 +1,8 @@
-const transformStackItems = [createMatrix()]
-let transform = transformStackItems[0]
-let transformStackPointer = 0
+const transformStackItems: mat4[] = [createMatrix()]
+let transform: mat4 = transformStackItems[0]
+let transformStackPointer: number = 0
 
-function pushTransformStack() {
+function pushTransformStack(): void {
   transformStackPointer++
   if (transformStackPointer >= transformStackItems.length) transformStackItems.push(createMatrix())
   const previousTransform = transform
@@ -10,12 +10,12 @@ function pushTransformStack() {
   copyMatrix(previousTransform, transform)
 }
 
-function popTransformStack() {
+function popTransformStack(): void {
   transformStackPointer--
   transform = transformStackItems[transformStackPointer]
 }
 
-function transformStack(contents) {
+function transformStack(contents: () => void): void {
   pushTransformStack()
   try {
     contents()
@@ -24,38 +24,38 @@ function transformStack(contents) {
   }
 }
 
-function translateOnX(meters) {
+function translateOnX(meters: number): void {
   translateMatrixOnX(transform, meters)
 }
 
-function translateOnY(meters) {
+function translateOnY(meters: number): void {
   translateMatrixOnY(transform, meters)
 }
 
-function translateOnZ(meters) {
+function translateOnZ(meters: number): void {
   translateMatrixOnZ(transform, meters)
 }
 
-function rotateAroundX(radians) {
+function rotateAroundX(radians: number): void {
   rotateMatrixAroundX(transform, radians)
 }
 
-function rotateAroundY(radians) {
+function rotateAroundY(radians: number): void {
   rotateMatrixAroundY(transform, radians)
 }
 
-function rotateAroundZ(radians) {
+function rotateAroundZ(radians: number): void {
   rotateMatrixAroundZ(transform, radians)
 }
 
-function scaleOnX(factor) {
+function scaleOnX(factor: number): void {
   scaleMatrixOnX(transform, factor)
 }
 
-function scaleOnY(factor) {
+function scaleOnY(factor: number): void {
   scaleMatrixOnY(transform, factor)
 }
 
-function scaleOnZ(factor) {
+function scaleOnZ(factor: number): void {
   scaleMatrixOnZ(transform, factor)
 }

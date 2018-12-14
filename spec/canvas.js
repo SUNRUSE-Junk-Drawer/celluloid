@@ -35,7 +35,7 @@ describe("canvas", () => {
     })
     assert({
       "creates one element": () => expect(createElement).toHaveBeenCalledTimes(1),
-      "creates a canvas": () => expect(createElement).toHaveBeenCalledWith("CANVAS"),
+      "creates a canvas": () => expect(createElement).toHaveBeenCalledWith("canvas"),
       "sets the canvas's style's position to fixed": () => expect(canvas.style.position).toEqual("fixed"),
       "sets the canvas's style's left to zero": () => expect(canvas.style.left).toEqual("0"),
       "sets the canvas's style's top to zero": () => expect(canvas.style.top).toEqual("0"),

@@ -1,11 +1,11 @@
-let renderLoopAnimationFrame = null
-let renderLoopLastTimestamp = null
+let renderLoopAnimationFrame: null | number = null
+let renderLoopLastTimestamp: null | number = null
 
-function statusToShow() {
+function statusToShow(): null | string {
   return errorEncountered || (!document.hasFocus() && "Paused") || (!glReady && "Restarting WebGL...") || null
 }
 
-function checkRenderLoop() {
+function checkRenderLoop(): void {
   const status = statusToShow()
   if (status) {
     setStatus(status)
@@ -21,12 +21,12 @@ function checkRenderLoop() {
   }
 }
 
-function renderLoop(timestamp) {
+function renderLoop(timestamp: number): void {
   const firstFrame = renderLoopLastTimestamp === null
-  const lastTimestamp = firstFrame ? timestamp : renderLoopLastTimestamp
+  const lastTimestamp = renderLoopLastTimestamp === null ? timestamp : renderLoopLastTimestamp
   renderLoopAnimationFrame = renderLoopLastTimestamp = null
   render((timestamp - lastTimestamp) / 1000)
   renderLoopAnimationFrame = requestAnimationFrame(renderLoop)
   renderLoopLastTimestamp = timestamp
-  if (firstFrame) setStatus()
+  if (firstFrame) setStatus(null)
 }

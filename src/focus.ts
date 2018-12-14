@@ -1,5 +1,5 @@
-let focused = true
-function setupFocus() {
+let focused: boolean = true
+function setupFocus(): void {
   addEventListener("focus", checkRenderLoop)
   addEventListener("blur", checkRenderLoop)
 }

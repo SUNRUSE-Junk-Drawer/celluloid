@@ -3,17 +3,17 @@
   "description": "Realtime 3D cel shading, anywhere.",
   "version": "0.0.0",
   "scripts": {
-    "start": "npm install && npm-run-all babel uglify-for-hosting uglify-for-debugging build-html && npm-run-all --parallel watch host debug",
-    "watch": "npm-run-all --parallel watch-babel watch-test watch-uglify-for-hosting watch-uglify-for-debugging watch-build-html",
-    "watch-babel": "chokidar src/**.js --command \"npm run-script babel\"",
+    "start": "npm install && npm-run-all typescript uglify-for-hosting uglify-for-debugging build-html && npm-run-all --parallel watch host debug",
+    "watch": "npm-run-all --parallel watch-typescript watch-test watch-uglify-for-hosting watch-uglify-for-debugging watch-build-html",
+    "watch-typescript": "tsc --watch --project tsconfig.json",
     "watch-test": "chokidar dist/index.js spec/**.js --command \"npm test\"",
     "watch-uglify-for-hosting": "chokidar dist/index.js --command \"npm run-script uglify-for-hosting\"",
     "watch-uglify-for-debugging": "chokidar dist/index.js --command \"npm run-script uglify-for-debugging\"",
     "watch-build-html": "chokidar build-html.js src/favicon.png --command \"npm run-script build-html\"",
+    "typescript": "tsc --project tsconfig.json",
     "test": "nyc --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 --include dist/index.js jasmine",
-    "babel": "mkdirp dist && babel --config-file ./browser.babelrc src --ignore src/header.js --out-file dist/index.js",
-    "uglify-for-hosting": "uglifyjs --compress --mangle --toplevel src/header.js dist/index.js --output dist/index.min.js",
-    "uglify-for-debugging": "uglifyjs --beautify --output dist/debugger.js src/header.js dist/index.js",
+    "uglify-for-hosting": "uglifyjs --compress --mangle --toplevel dist/index.js --output dist/index.min.js",
+    "uglify-for-debugging": "uglifyjs --beautify --output dist/debugger.js dist/index.js",
     "build-html": "babel-node ./build-html.js",
     "host": "mkdirp dist && cd dist && http-static",
     "debug": "electron -r @babel/register ./debugger/main.js"
@@ -37,6 +37,7 @@
     "npm-run-all": "4.1.5",
     "nyc": "11.6.0",
     "rewire": "4.0.1",
+    "typescript": "^3.2.2",
     "uglify-js": "3.3.16"
   },
   "dependencies": {}

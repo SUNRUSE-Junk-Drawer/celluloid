@@ -1,7 +1,7 @@
-let canvas = null
+let canvas: null | HTMLCanvasElement = null
 
-function setupCanvas() {
-  canvas = document.createElement("CANVAS")
+function setupCanvas(): void {
+  canvas = document.createElement("canvas")
   canvas.style.position = "fixed"
   canvas.style.left = "0"
   canvas.style.top = "0"
@@ -13,7 +13,7 @@ function setupCanvas() {
   document.body.appendChild(canvas)
 }
 
-function stopCanvas() {
+function stopCanvas(): void {
   if (!canvas) return
   canvas.removeEventListener("webglcontextlost", handleContextLost)
   canvas.removeEventListener("webglcontextrestored", handleContextRestored)

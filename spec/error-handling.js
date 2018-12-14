@@ -3,7 +3,7 @@ describe("errorHandling", () => {
     "defines errorEncountered as null": () => expect(index.__get__("errorEncountered")).toBeNull()
   })
 
-  describe("handleError", () => {
+  describe("onerror", () => {
     let checkRenderLoop, errorEncounteredAtTimeOfCheckingRenderLoop, stopCanvas
     setup(() => {
       checkRenderLoop = jasmine.createSpy("checkRenderLoop")
@@ -12,7 +12,7 @@ describe("errorHandling", () => {
       errorEncounteredAtTimeOfCheckingRenderLoop = null
       stopCanvas = jasmine.createSpy("stopCanvas")
       index.__set__("stopCanvas", stopCanvas)
-      index.__get__("handleError")("Test Message", "Test Source File", 398, 289, "Test Error")
+      index.__get__("onerror")("Test Message", "Test Source File", 398, 289, "Test Error")
     })
     assert({
       "sets errorEncountered to describe the error": () => expect(index.__get__("errorEncountered")).toEqual(`Unhandled error on line 398, column 289 of "Test Source File":

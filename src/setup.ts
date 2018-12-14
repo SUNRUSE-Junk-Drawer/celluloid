@@ -1,4 +1,4 @@
-function setup() {
+onload = () => {
   setupFocus()
   setupCanvas()
   setupGl()

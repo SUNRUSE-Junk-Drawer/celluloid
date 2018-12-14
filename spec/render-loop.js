@@ -224,7 +224,7 @@ describe("renderLoop", () => {
           "stores the requested animation frame": () => expect(index.__get__("renderLoopAnimationFrame")).toEqual("Test Requested Animation Frame"),
           "stores the timestamp": () => expect(index.__get__("renderLoopLastTimestamp")).toEqual(8973.21),
           "sets the status once": () => expect(setStatus).toHaveBeenCalledTimes(1),
-          "clears the status message": () => expect(setStatus).toHaveBeenCalledWith()
+          "clears the status message": () => expect(setStatus).toHaveBeenCalledWith(null)
         })
       })
 

@@ -10,7 +10,7 @@ describe("setup", () => {
     index.__set__("setupGl", setupGl)
     checkRenderLoop = jasmine.createSpy("checkRenderLoop")
     index.__set__("checkRenderLoop", checkRenderLoop)
-    index.__get__("setup")()
+    index.__get__("onload")()
   })
 
   assert({

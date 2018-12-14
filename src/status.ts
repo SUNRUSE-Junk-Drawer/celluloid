@@ -1,4 +1,4 @@
-function setStatus(to) {
+function setStatus(to: null | string): void {
   var element = document.getElementById("status")
   if (element) {
     if (to) {

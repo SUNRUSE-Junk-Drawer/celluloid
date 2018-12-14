@@ -63,7 +63,7 @@ describe("file", () => {
         "does not send again": () => expect(send).toHaveBeenCalledTimes(1),
         "does not execute the callback": () => expect(callback).not.toHaveBeenCalled(),
         "logs one error": () => expect(console.error).toHaveBeenCalledTimes(1),
-        "logs the error": () => expect(console.error).toHaveBeenCalledWith("Test Error")
+        "logs the error": () => expect(console.error).toHaveBeenCalledWith("Failed to read file \"Test URL\" as an ArrayBuffer.")
       })
     })
 

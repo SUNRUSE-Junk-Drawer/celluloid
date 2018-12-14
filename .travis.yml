@@ -5,7 +5,7 @@ node_js:
 install:
   - npm install
 script:
-  - npm run-script babel
+  - npm run-script typescript
   - npm test
   - npm run-script uglify-for-hosting
   - npm run-script build-html

@@ -89,6 +89,29 @@ describe("animation", () => {
         "does not read any further into the file": () => expect(parser.position).toEqual(8)
       })
     })
+
+    describe("unexpected type", () => {
+      let parser, error
+      setup(() => {
+        parser = {
+          dataView: new DataView(new Uint8Array([
+            131, 127, 117,
+            70, 233, 50, 64,
+            4,
+            86, 26, 221, 42
+          ]).buffer),
+          position: 3
+        }
+        try {
+          result = index.__get__("parseKeyframe")(parser)
+        } catch (e) {
+          error = e
+        }
+      })
+      assert({
+        "it throws an error": () => expect(error).toEqual(new Error("Unexpected keyframe type 4."))
+      })
+    })
   })
 
   describe("parseAnimation", () => {
