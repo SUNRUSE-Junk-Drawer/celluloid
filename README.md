@@ -1,8 +1,3 @@
-# Celluloid
-Realtime 3D cel shading, anywhere.
+# Celluloid [![Travis](https://img.shields.io/travis/jameswilddev/celluloid.svg)](https://travis-ci.org/jameswilddev/celluloid) [![License](https://img.shields.io/github/license/jameswilddev/celluloid.svg)](https://github.com/jameswilddev/celluloid/blob/master/license) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjameswilddev%2Fcelluloid.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjameswilddev%2Fcelluloid?ref=badge_shield) [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 
-[![Travis](https://img.shields.io/travis/jameswilddev/celluloid.svg)](https://travis-ci.org/jameswilddev/celluloid)
-[![David](https://img.shields.io/david/jameswilddev/celluloid.svg)](https://david-dm.org/jameswilddev/celluloid)
-[![David](https://img.shields.io/david/dev/jameswilddev/celluloid.svg)](https://david-dm.org/jameswilddev/celluloid?type=dev)
-[![Coveralls github](https://img.shields.io/coveralls/github/jameswilddev/celluloid.svg)](https://coveralls.io/github/jameswilddev/celluloid)
-[![license](https://img.shields.io/github/license/jameswilddev/celluloid.svg)](https://github.com/jameswilddev/celluloid/blob/master/licence)
+Realtime 3D cel shading, anywhere.
