@@ -1,5 +1,5 @@
 // This implements a basic vector maths library supporting 3D vectors and 4x4
-// matrices, following a design similar to gl-matrix where all are mutable (and 
+// matrices, following a design similar to gl-matrix where all are mutable (and
 // reused) to reduce GC pressure.
 
 // All transforms are applied locally, so:

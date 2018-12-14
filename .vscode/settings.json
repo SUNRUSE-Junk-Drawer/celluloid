@@ -1,9 +1,18 @@
 {
+  "editor.detectIndentation": false,
   "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.rulers": [
+    80
+  ],
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.rulers": [
-    80
-  ]
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.exclude": {
+    ".git": true,
+    "node_modules": true
+  }
 }

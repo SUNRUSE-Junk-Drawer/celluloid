@@ -1,7 +1,7 @@
 # Celluloid Scene File (JSON)
 
 A scene file is a JSON document describing a scene graph which can be rendered
-using Celluloid.  It is intended to be source controllable and able to 
+using Celluloid.  It is intended to be source controllable and able to
 round-trip to Blender.
 
 ## Units
@@ -182,7 +182,7 @@ Describes a "polygon soup".
 		"any x animation",
 		"any y animation",
 		"any z animation"
-	], 
+	],
 	"rotation": [
 		"any x animation",
 		"any y animation",

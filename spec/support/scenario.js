@@ -1,7 +1,7 @@
 // Rewire time was causing test runtime to be unmanageable; Jasmine's beforeEach
 // runs on every it(...), while its beforeAll runs only once.  What we really
 // want is something which runs once per scenario, with side-effect-free
-// assertions, which is a many-times speed-up as we only rewire once per 
+// assertions, which is a many-times speed-up as we only rewire once per
 // scenario.
 
 const rewire = require("rewire")

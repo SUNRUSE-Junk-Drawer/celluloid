@@ -149,7 +149,7 @@ class ImportCelluloidSceneFile(bpy.types.Operator, bpy_extras.io_utils.ImportHel
           elif keyframe["type"] == "true":
             created = fcurve.keyframe_points.insert(keyframe["startsOnFrame"], 1)
             created.interpolation = "CONSTANT"
-          
+
       setattr(object, property_name, first_keyframe_values if len(first_keyframe_values) > 1 else first_keyframe_values[0])
 
     ambient_light = bpy.context.scene.objects["ambientLight"]
@@ -267,7 +267,7 @@ class ExportCelluloidSceneFile(bpy.types.Operator, bpy_extras.io_utils.ExportHel
             if curve.data_path != property_name: continue
             if curve.array_index != axis: continue
             curve.update()
-            if (curve.extrapolation != "CONSTANT"): 
+            if (curve.extrapolation != "CONSTANT"):
               self.report({"ERROR"}, "Object \"" + object.name + "\" contains unexpected extrapolation type \"" + curve.extrapolation + "\".")
               return False
 
@@ -285,7 +285,7 @@ class ExportCelluloidSceneFile(bpy.types.Operator, bpy_extras.io_utils.ExportHel
               else:
                 if keyframe.interpolation == "CONSTANT": exported["type"] = "constant"
                 elif keyframe.interpolation == "LINEAR": exported["type"] = "linear"
-                else: 
+                else:
                   self.report({"ERROR"}, "Object \"" + object.name + "\" contains unexpected interpolation type \"" + keyframe.interpolation + "\".")
                   return False
                 exported["withValue"] = value
@@ -296,7 +296,7 @@ class ExportCelluloidSceneFile(bpy.types.Operator, bpy_extras.io_utils.ExportHel
             found = True
             break
 
-        if not found: 
+        if not found:
           if is_boolean:
             output.append([{
               "type": "true" if fallback[axis] else "false",
@@ -448,8 +448,8 @@ class ExportCelluloidSceneFile(bpy.types.Operator, bpy_extras.io_utils.ExportHel
 
       json_object["data"]["sceneNode"][object.name] = exported
 
-    json_object = { 
-      "celluloidScene": json_object 
+    json_object = {
+      "celluloidScene": json_object
     }
     json_string = json.dumps(json_object, indent=4, sort_keys=True)
 

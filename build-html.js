@@ -124,4 +124,3 @@ mkdirp("dist/icons", err => {
     }
   })
 })
-

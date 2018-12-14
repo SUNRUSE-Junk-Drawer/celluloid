@@ -32,7 +32,7 @@ There is no further animation.
 
 ## Structure
 
-- Three animations specifying the red, green and blue color of the ambient 
+- Three animations specifying the red, green and blue color of the ambient
   light.
 - An animation specifying the energy of the ambient light.
 
