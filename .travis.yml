@@ -9,5 +9,4 @@ script:
   - npm test
   - npm run-script jshint
   - npm run-script uglify-for-hosting
-  - npm run-script upload-coverage
   - npm run-script build-html

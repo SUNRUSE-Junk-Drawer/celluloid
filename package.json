@@ -18,8 +18,7 @@
         "uglify-for-debugging": "uglifyjs --beautify --output dist/debugger.js src/header.js dist/index.js",
         "build-html": "babel-node ./build-html.js",
         "host": "mkdirp dist && cd dist && http-static",
-        "debug": "electron -r @babel/register ./debugger/main.js",
-        "upload-coverage": "nyc report --reporter=text-lcov | coveralls"
+        "debug": "electron -r @babel/register ./debugger/main.js"
     },
     "devDependencies": {
         "@babel/cli": "7.0.0-beta.42",
@@ -29,7 +28,6 @@
         "@babel/register": "7.0.0-beta.42",
         "chokidar-cli": "1.2.0",
         "concat": "1.0.3",
-        "coveralls": "3.0.0",
         "electron": "1.8.4",
         "favicons": "5.0.0",
         "gl-matrix": "2.4.0",
