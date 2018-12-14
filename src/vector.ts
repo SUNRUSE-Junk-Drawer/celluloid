@@ -8,12 +8,28 @@
 // rotateMatrixAroundY(...)
 // will work as expected.
 
+interface vec2 extends Float32Array {
+  readonly length: 2
+}
+
 interface vec3 extends Float32Array {
   readonly length: 3
 }
 
+interface vec4 extends Float32Array {
+  readonly length: 4
+}
+
 function createVector(): vec3 {
   return new Float32Array(3) as vec3
+}
+
+interface mat2 extends Float32Array {
+  readonly length: 4
+}
+
+interface mat3 extends Float32Array {
+  readonly length: 9
 }
 
 interface mat4 extends Float32Array {
