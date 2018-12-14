@@ -51,30 +51,4 @@ describe("canvas", () => {
       "exposes the canvas": () => expect(index.__get__("canvas")).toBe(canvas)
     })
   })
-
-  describe("stopCanvas", () => {
-    describe("when there is not a canvas", () => {
-      setup(() => index.__get__("stopCanvas")())
-      assert({
-        "does nothing": () => { }
-      })
-    })
-    describe("when there is a canvas", () => {
-      let removeEventListener
-      setup(() => {
-        removeEventListener = jasmine.createSpy("removeEventListener")
-        index.__set__("canvas", {
-          removeEventListener
-        })
-        index.__set__("handleContextLost", "Test Handle Context Lost")
-        index.__set__("handleContextRestored", "Test Handle Context Restored")
-        index.__get__("stopCanvas")()
-      })
-      assert({
-        "removes two event listeners": () => expect(removeEventListener).toHaveBeenCalledTimes(2),
-        "removes a context lost event listener": () => expect(removeEventListener).toHaveBeenCalledWith("webglcontextlost", "Test Handle Context Lost"),
-        "removes a context restored event listener": () => expect(removeEventListener).toHaveBeenCalledWith("webglcontextrestored", "Test Handle Context Restored"),
-      })
-    })
-  })
 })
