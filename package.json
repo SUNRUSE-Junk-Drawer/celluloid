@@ -35,7 +35,7 @@
         "gl-matrix": "2.4.0",
         "glob": "7.1.2",
         "html-minifier": "3.5.12",
-        "http-static": "0.0.8",
+        "http-static": "0.1.1",
         "imagemin": "5.3.1",
         "imagemin-pngcrush": "5.1.0",
         "jasmine": "3.1.0",
