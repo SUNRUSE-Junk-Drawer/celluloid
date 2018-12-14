@@ -8,7 +8,7 @@ describe("renderLoop", () => {
     describe("when gl is ready", () => {
       setup(() => index.__set__("glReady", true))
       describe("when focused", () => {
-        setup(() => index.__set__("focused", true))
+        setup(() => index.__set__("document", { hasFocus: () => true }))
         describe("when an error has been encountered", () => {
           setup(() => index.__set__("errorEncountered", "Test Error"))
           assert({
@@ -24,7 +24,7 @@ describe("renderLoop", () => {
       })
 
       describe("when not focused", () => {
-        setup(() => index.__set__("focused", false))
+        setup(() => index.__set__("document", { hasFocus: () => false }))
         describe("when an error has been encountered", () => {
           setup(() => index.__set__("errorEncountered", "Test Error"))
           assert({
@@ -42,7 +42,7 @@ describe("renderLoop", () => {
     describe("when gl is not ready", () => {
       setup(() => index.__set__("glReady", false))
       describe("when focused", () => {
-        setup(() => index.__set__("focused", true))
+        setup(() => index.__set__("document", { hasFocus: () => true }))
         describe("when an error has been encountered", () => {
           setup(() => index.__set__("errorEncountered", "Test Error"))
           assert({
@@ -58,7 +58,7 @@ describe("renderLoop", () => {
       })
 
       describe("when not focused", () => {
-        setup(() => index.__set__("focused", false))
+        setup(() => index.__set__("document", { hasFocus: () => false }))
         describe("when an error has been encountered", () => {
           setup(() => index.__set__("errorEncountered", "Test Error"))
           assert({
