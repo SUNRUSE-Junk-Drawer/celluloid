@@ -27,7 +27,7 @@
     "chokidar-cli": "1.2.1",
     "electron": "1.8.4",
     "favicons": "5.0.0",
-    "gl-matrix": "2.4.0",
+    "gl-matrix": "2.8.1",
     "html-minifier": "3.5.12",
     "http-static": "0.1.1",
     "imagemin": "5.3.1",
