@@ -29,28 +29,9 @@ describe("transform", () => {
       expect(events).toEqual(expectedEvents)
     }
 
-    const runWithException = (callbacks, expectedEvents) => () => {
-      events.length = 0
-
-      callbacks.slice(0, -1).forEach(callback => index.__get__("transformStack")(callback))
-      expect(() => index.__get__("transformStack")(callbacks[callbacks.length - 1])).toThrow("Test Exception")
-
-      expect(events).toEqual(expectedEvents)
-    }
-
     assert({
       "one call": runSuccessfully([
         () => events.push("Callback A")
-      ], [
-          "Stack Pushed",
-          "Callback A",
-          "Stack Popped"
-        ]),
-      "one call when the callback throws an exception": runWithException([
-        () => {
-          events.push("Callback A")
-          throw "Test Exception"
-        }
       ], [
           "Stack Pushed",
           "Callback A",
@@ -67,60 +48,11 @@ describe("transform", () => {
           "Callback B",
           "Stack Popped"
         ]),
-      "two calls when the second callback throws an exception": runWithException([
-        () => events.push("Callback A"),
-        () => {
-          events.push("Callback B")
-          throw "Test Exception"
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A",
-          "Stack Popped",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped"
-        ]),
       "two nested calls": runSuccessfully([
         () => {
           events.push("Callback A Start")
           index.__get__("transformStack")(() => events.push("Callback B"))
           events.push("Callback A End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Callback A End",
-          "Stack Popped"
-        ]),
-      "two nested calls when the nested callback throws an exception": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => {
-            events.push("Callback B")
-            throw "Test Exception"
-          })
-          events.push("Callback A End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Stack Popped"
-        ]),
-      "two nested calls when an exception is thrown after the nested callback": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => {
-            events.push("Callback B")
-          })
-          events.push("Callback A End")
-          throw "Test Exception"
         }
       ], [
           "Stack Pushed",
@@ -158,85 +90,6 @@ describe("transform", () => {
           "Callback C End",
           "Stack Popped"
         ]),
-      "two calls containing one each when an exception is thrown before the second nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => events.push("Callback B"))
-          events.push("Callback A End")
-        },
-        () => {
-          events.push("Callback C")
-          throw "Test Exception"
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Callback A End",
-          "Stack Popped",
-          "Stack Pushed",
-          "Callback C",
-          "Stack Popped"
-        ]),
-      "two calls containing one each when an exception is thrown during the second nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => events.push("Callback B"))
-          events.push("Callback A End")
-        },
-        () => {
-          events.push("Callback C Start")
-          index.__get__("transformStack")(() => {
-            events.push("Callback D")
-            throw "Test Exception"
-          })
-          events.push("Callback C End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Callback A End",
-          "Stack Popped",
-          "Stack Pushed",
-          "Callback C Start",
-          "Stack Pushed",
-          "Callback D",
-          "Stack Popped",
-          "Stack Popped"
-        ]),
-      "two calls containing one each when an exception is thrown after the second nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => events.push("Callback B"))
-          events.push("Callback A End")
-        },
-        () => {
-          events.push("Callback C Start")
-          index.__get__("transformStack")(() => {
-            events.push("Callback D")
-          })
-          throw "Test Exception"
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Callback A End",
-          "Stack Popped",
-          "Stack Pushed",
-          "Callback C Start",
-          "Stack Pushed",
-          "Callback D",
-          "Stack Popped",
-          "Stack Popped"
-        ]),
       "one call containing two calls": runSuccessfully([
         () => {
           events.push("Callback A Start")
@@ -244,53 +97,6 @@ describe("transform", () => {
           events.push("Callback A Between")
           index.__get__("transformStack")(() => events.push("Callback C"))
           events.push("Callback A End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Callback A Between",
-          "Stack Pushed",
-          "Callback C",
-          "Stack Popped",
-          "Callback A End",
-          "Stack Popped"
-        ]),
-      "one call containing two calls when an exception is thrown during the second nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => events.push("Callback B"))
-          events.push("Callback A Between")
-          index.__get__("transformStack")(() => {
-            events.push("Callback C")
-            throw "Test Exception"
-          })
-          events.push("Callback A End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B",
-          "Stack Popped",
-          "Callback A Between",
-          "Stack Pushed",
-          "Callback C",
-          "Stack Popped",
-          "Stack Popped"
-        ]),
-      "one call containing two calls when an exception is thrown after the second nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => events.push("Callback B"))
-          events.push("Callback A Between")
-          index.__get__("transformStack")(() => {
-            events.push("Callback C")
-          })
-          events.push("Callback A End")
-          throw "Test Exception"
         }
       ], [
           "Stack Pushed",
@@ -326,53 +132,6 @@ describe("transform", () => {
           "Callback B End",
           "Stack Popped",
           "Callback A End",
-          "Stack Popped"
-        ]),
-      "three nested calls when an exception is thrown after the nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => {
-            events.push("Callback B Start")
-            index.__get__("transformStack")(() => events.push("Callback C"))
-            events.push("Callback B End")
-            throw "Test Exception"
-          })
-          events.push("Callback A End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B Start",
-          "Stack Pushed",
-          "Callback C",
-          "Stack Popped",
-          "Callback B End",
-          "Stack Popped",
-          "Stack Popped"
-        ]),
-      "three nested calls when an exception is thrown during the nested call": runWithException([
-        () => {
-          events.push("Callback A Start")
-          index.__get__("transformStack")(() => {
-            events.push("Callback B Start")
-            index.__get__("transformStack")(() => {
-              events.push("Callback C")
-              throw "Test Exception"
-            })
-            events.push("Callback B End")
-          })
-          events.push("Callback A End")
-        }
-      ], [
-          "Stack Pushed",
-          "Callback A Start",
-          "Stack Pushed",
-          "Callback B Start",
-          "Stack Pushed",
-          "Callback C",
-          "Stack Popped",
-          "Stack Popped",
           "Stack Popped"
         ])
     })

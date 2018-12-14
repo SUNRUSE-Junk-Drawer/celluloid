@@ -17,11 +17,8 @@ function popTransformStack(): void {
 
 function transformStack(contents: () => void): void {
   pushTransformStack()
-  try {
-    contents()
-  } finally {
-    popTransformStack()
-  }
+  contents()
+  popTransformStack()
 }
 
 function translateOnX(meters: number): void {
