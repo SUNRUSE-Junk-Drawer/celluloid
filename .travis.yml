@@ -7,6 +7,5 @@ install:
 script:
   - npm run-script babel
   - npm test
-  - npm run-script jshint
   - npm run-script uglify-for-hosting
   - npm run-script build-html
