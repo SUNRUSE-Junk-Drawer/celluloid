@@ -11,7 +11,7 @@ mkdirp("dist/icons", err => {
   if (err) throw err
 
   console.log("Generating favicons...")
-  favicons("src/favicon.png", {
+  favicons("src/favicon.svg", {
     appName: "Celluloid",
     appDescription: null,
     developerName: null,
