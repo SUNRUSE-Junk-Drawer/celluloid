@@ -38,7 +38,7 @@
     "nyc": "13.1.0",
     "rewire": "4.0.1",
     "typescript": "3.2.2",
-    "uglify-js": "3.3.16"
+    "uglify-js": "3.4.9"
   },
   "dependencies": {}
 }
