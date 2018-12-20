@@ -19,11 +19,11 @@
     "debug": "electron -r @babel/register ./debugger/main.js"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.42",
-    "@babel/core": "7.0.0-beta.42",
-    "@babel/node": "7.0.0-beta.42",
-    "@babel/preset-env": "7.0.0-beta.42",
-    "@babel/register": "7.0.0-beta.42",
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.2.2",
+    "@babel/node": "7.2.2",
+    "@babel/preset-env": "7.2.3",
+    "@babel/register": "7.0.0",
     "chokidar-cli": "1.2.1",
     "electron": "3.0.13",
     "favicons": "5.3.0",
